@@ -1,3 +1,1 @@
-# angular2-nodejs
-Empty Seed Project
-This is a skeleton/empty seed to start any of my Angular 4/Node/Express project
+This will eventually be Qwk.io using Node,Angular 4, Express and MongoDB. Right now this app is in another repo and is using Ruby on Rails/MongoDB. Working on converting it.
