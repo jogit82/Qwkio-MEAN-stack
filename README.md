@@ -1,5 +1,5 @@
 # empty-seed-angular-node
-UThis project can be downloaded and used as a skeleton to start any Angular 4/Node Projects
+This project can be downloaded and used as a skeleton to start any Angular 4/Node Projects
 
 Steps:
 ------
@@ -12,3 +12,5 @@ Steps:
 
 If you are curious, visit
 [Blog Post About All The Steps Taken To Set This Project Up](https://alwaysbecoding.bold.io/empty-seed-project-nodejs-angular-2017-05-26)	
+[Email me] if you have any questions.
+(mailto:jochong82@gmail.com)	
