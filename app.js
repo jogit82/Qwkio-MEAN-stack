@@ -21,7 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// handle request from other servers(e.g. angular on one server and server code on another server)
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -29,12 +28,11 @@ app.use(function(req, res, next) {
   next();
 });
 
-// handle any request by forwarding to routes/app, if we didn't find a fitting route, we come back to this app.js file and 404 error below
 app.use('/', appRoutes);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    return res.render('index');
+app.use(function(req, res, next) {
+  res.render('index');
 });
 
 module.exports = app;

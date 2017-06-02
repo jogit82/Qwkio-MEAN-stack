@@ -8,7 +8,6 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.ts']
     },
-
     module: {
         rules: [
             {
@@ -21,6 +20,5 @@ module.exports = {
             }
         ],
         exprContextCritical: false
-
     }
 };
