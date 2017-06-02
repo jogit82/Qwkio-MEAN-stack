@@ -11,4 +11,4 @@ Steps:
 6. Open localhost/3000 in your browser, you should see Hello World! displayed on the web page.
 
 If you are curious, visit
-[Blog Post About All The Steps Taken To Set This Project Up](http://https://alwaysbecoding.bold.io/empty-seed-project-nodejs-angular-2017-05-26)	
+[Blog Post About All The Steps Taken To Set This Project Up](https://alwaysbecoding.bold.io/empty-seed-project-nodejs-angular-2017-05-26)	
