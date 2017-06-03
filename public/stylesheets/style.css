@@ -6,3 +6,24 @@ body {
 a {
   color: #00B7FF;
 }
+
+.navbar {
+  background-color: #222E33;
+  border: none;
+  font-family: Tahoma;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+}
+
+.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+}
+
+.navbar .navbar-collapse {
+  text-align: center;
+}
+
+.navbar a:hover{
+  color: #FFFFFF !important;
+}
