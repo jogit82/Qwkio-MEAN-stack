@@ -12,5 +12,6 @@ Steps:
 
 If you are curious, visit
 [Blog Post About All The Steps Taken To Set This Project Up](https://alwaysbecoding.bold.io/empty-seed-project-nodejs-angular-2017-05-26)	
-[Email me] if you have any questions.
-(mailto:jochong82@gmail.com)	
+
+Email me if you have any questions.
+[Email](mailto:jochong82@gmail.com)	
