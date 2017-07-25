@@ -1,17 +1,13 @@
-// import { NgModule } from '@angular/core';
-// import { RouterModule, Routes } from '@angular/router';
-// import { SurveysComponent } from './surveys/surveys.component';
+import { HomeComponent } from './home/home.component';
+import {Routes, RouterModule} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { SurveyInputComponent } from './survey/survey-input.component';
 
 
-// const appRoutes: Routes = [
-//     { path: '', redirectTo: '/surveys' },
-//     { path: 'surveys', component: SurveysComponent } 
-// ];
+const appRoutes: Routes = [
+    { path: '', redirectTo: '/create', pathMatch: 'full' },
+    { path: 'create', component: SurveyInputComponent },
+    { path: 'home', component: HomeComponent }
+];
 
-// @NgModule({
-//     imports: [RouterModule.forRoot(appRoutes)],
-//     exports: [RouterModule]
-// })
-// export class AppRoutingModule {
-
-// }
+export const AppRoutingModule = RouterModule.forRoot(appRoutes);
