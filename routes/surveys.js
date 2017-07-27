@@ -16,102 +16,102 @@ router.get('/survey/:ak', function(req, res, next) {
   });
 });
 
-var surveyController = (function() {
-  var surveyObj, title, description, question, re_question, re_multichoice, re_radio, re_dropdown, re_textbox, re_pointrating;
-  // validate rawtext and make sure it is the rigth format for a survey
-  function validatesurvey(survey) {
-    title = '';
-    description = '';
+// var surveyController = (function() {
+//   var surveyObj, title, description, question, re_question, re_multichoice, re_radio, re_dropdown, re_textbox, re_pointrating;
+//   // validate rawtext and make sure it is the rigth format for a survey
+//   function validatesurvey(survey) {
+//     title = '';
+//     description = '';
 
-    // regular expressions to test what each line is
-    re_question = /^\d*\)(.*)$/; // d, ), space?
-    re_multichoice = /^\[ \](.*)$/; // [, space, ], space?
-    re_radio = /^\( \)(.*)$/; // (, ) space?
-    re_dropdown = /^\< \>(.*)$/; // <, >, space?
-    re_textbox = /^_{3,}\s*$/; // _(at least 3), space?
-    re_pointrating = /^(\(\d+\)\s*){3,10}$/; // (, d, ), space?
+//     // regular expressions to test what each line is
+//     re_question = /^\d*\)(.*)$/; // d, ), space?
+//     re_multichoice = /^\[ \](.*)$/; // [, space, ], space?
+//     re_radio = /^\( \)(.*)$/; // (, ) space?
+//     re_dropdown = /^\< \>(.*)$/; // <, >, space?
+//     re_textbox = /^_{3,}\s*$/; // _(at least 3), space?
+//     re_pointrating = /^(\(\d+\)\s*){3,10}$/; // (, d, ), space?
 
-    return compile(survey);
-  }
+//     return compile(survey);
+//   }
 
-  function compile(survey) {
-    surveyObj = survey;
-    questions = [];
-    var is_questionheader, is_multichoice, is_radio, is_dropdown, is_textbox, is_pointrating;
-    var curQuestion = {};
-    var idx = 1;
-    var lines = surveyObj.rawtext.split('\n');
-    for(var i = 0; i < lines.length; i ++) {
-      if(lines[i] === '') {
-        continue;
-      }
-      line = lines[i].trim();
-      is_questionheader = re_question.test(line);
-      is_multichoice = re_multichoice.test(line)
-      is_radio = re_radio.test(line)
-      is_dropdown = re_dropdown.test(line)
-      is_textbox = re_textbox.test(line)
-      is_pointrating = re_pointrating.test(line)
+//   function compile(survey) {
+//     surveyObj = survey;
+//     questions = [];
+//     var is_questionheader, is_multichoice, is_radio, is_dropdown, is_textbox, is_pointrating;
+//     var curQuestion = {};
+//     var idx = 1;
+//     var lines = surveyObj.rawtext.split('\n');
+//     for(var i = 0; i < lines.length; i ++) {
+//       if(lines[i] === '') {
+//         continue;
+//       }
+//       line = lines[i].trim();
+//       is_questionheader = re_question.test(line);
+//       is_multichoice = re_multichoice.test(line)
+//       is_radio = re_radio.test(line)
+//       is_dropdown = re_dropdown.test(line)
+//       is_textbox = re_textbox.test(line)
+//       is_pointrating = re_pointrating.test(line)
 
-      if (is_questionheader) {// line is question header
-          curQuestion = {} // start a new question
-          curQuestion['id'] = idx;
-          idx ++;
-          questions.push(curQuestion);
-          curQuestion['title'] = line.slice(line.indexOf(' ')).trim(); // title of question
-      }
-      else if (is_multichoice && curQuestion) { // line is multiple choice checkbox
-          curQuestion['type'] = curQuestion['type'] || 'checkbox';
-          curQuestion['option'] = curQuestion['option'] || [];
-          curQuestion['option'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
-      }
-      else if (is_radio && curQuestion) { // line is radio options
-        curQuestion['type'] = curQuestion['type'] || 'radio';
-        curQuestion['option'] = curQuestion['option'] || [];
-        curQuestion['option'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
-      }
-      else if (is_dropdown && curQuestion) { // line is dropdown
-        curQuestion['type'] = curQuestion['type'] || 'dropdown';
-        curQuestion['option'] = curQuestion['option'] || [];
-        curQuestion['option'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
-      }
-      else if (is_textbox && curQuestion) { // line is text input box
-        if (curQuestion['type'] === 'singleline') { // already have a singleline, so let's upgrade it to a multiline
-          curQuestion['type'] = 'multiline'
-        }
-        else if (curQuestion['type'] !== 'multiline') {
-          curQuestion['type'] = 'singleline'
-        }
-      }
-      else if (is_pointrating && curQuestion) { // line is point rating
-        curQuestion['type'] = curQuestion['type'] || 'pointrating';
-        curQuestion['points'] = (line.match(new RegExp(/\(/, "g")) || []).length;
-      }
-      else if (curQuestion && !curQuestion['type']) {// no format match but we are in a question, make this a question subtext
-        curQuestion['subtitle'] = line;
-      }
-      else if (curQuestion === null) {
-        if (title === '') {
-          continue;
-        }
-        description = line;
-      }
-    }
+//       if (is_questionheader) {// line is question header
+//           curQuestion = {} // start a new question
+//           curQuestion['id'] = idx;
+//           idx ++;
+//           questions.push(curQuestion);
+//           curQuestion['title'] = line.slice(line.indexOf(' ')).trim(); // title of question
+//       }
+//       else if (is_multichoice && curQuestion) { // line is multiple choice checkbox
+//           curQuestion['type'] = curQuestion['type'] || 'checkbox';
+//           curQuestion['option'] = curQuestion['option'] || [];
+//           curQuestion['option'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
+//       }
+//       else if (is_radio && curQuestion) { // line is radio options
+//         curQuestion['type'] = curQuestion['type'] || 'radio';
+//         curQuestion['option'] = curQuestion['option'] || [];
+//         curQuestion['option'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
+//       }
+//       else if (is_dropdown && curQuestion) { // line is dropdown
+//         curQuestion['type'] = curQuestion['type'] || 'dropdown';
+//         curQuestion['option'] = curQuestion['option'] || [];
+//         curQuestion['option'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
+//       }
+//       else if (is_textbox && curQuestion) { // line is text input box
+//         if (curQuestion['type'] === 'singleline') { // already have a singleline, so let's upgrade it to a multiline
+//           curQuestion['type'] = 'multiline'
+//         }
+//         else if (curQuestion['type'] !== 'multiline') {
+//           curQuestion['type'] = 'singleline'
+//         }
+//       }
+//       else if (is_pointrating && curQuestion) { // line is point rating
+//         curQuestion['type'] = curQuestion['type'] || 'pointrating';
+//         curQuestion['points'] = (line.match(new RegExp(/\(/, "g")) || []).length;
+//       }
+//       else if (curQuestion && !curQuestion['type']) {// no format match but we are in a question, make this a question subtext
+//         curQuestion['subtitle'] = line;
+//       }
+//       else if (curQuestion === null) {
+//         if (title === '') {
+//           continue;
+//         }
+//         description = line;
+//       }
+//     }
 
-    if (questions.length === 0) {
-      console.log("no question!");
-      return false;
-    }
-    else {
-      console.log(questions);
-      return true;
-    }
-  }
+//     if (questions.length === 0) {
+//       console.log("no question!");
+//       return false;
+//     }
+//     else {
+//       console.log(questions);
+//       return true;
+//     }
+//   }
   
-  return {
-    validatesurvey: validatesurvey
-  }
-})();
+//   return {
+//     validatesurvey: validatesurvey
+//   }
+// })();
 
 router.post('/', function(req, res, next) {
   var rawtext = req.body.survey;

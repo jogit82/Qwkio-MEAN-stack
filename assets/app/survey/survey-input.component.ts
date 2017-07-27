@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Event } from '@angular/router';
+import { SurveyService } from '../shared/survey.service';
+import { Survey } from './survey.model';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
     selector: 'app-survey-input',
@@ -6,5 +9,13 @@ import { Component } from '@angular/core';
 })
 
 export class SurveyInputComponent {
+    @Output() previewClicked = new EventEmitter<any>();
+    private surveyObject;
+    constructor(private surveyService: SurveyService) {}
 
+    onPreview(rawtext: string) {
+        this.surveyObject = this.surveyService.convertToJSON(rawtext);
+        this.previewClicked.emit(this.surveyObject);
+    }
+    
 }

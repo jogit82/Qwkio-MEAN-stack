@@ -1,0 +1,50 @@
+<div class="container survey" *ngIf="surveyObject">
+    <div class="panel panel-success">
+        <div class="panel-heading">{{ surveyObject.title }}</div>
+        <div class="panel-body">{{ surveyObject.description }}</div>
+        <form method="post" action="/response">
+            <ol>
+                <li *ngFor="let q of surveyObject.questions">
+                    Question {{ q.idx }} {{ q.title }}
+                    <div *ngIf="q.type==='radio'">
+                        <div class="radio" *ngFor="let option of q.options">
+                        <input name="Q{{ q.idx }}" id="Q_{{ q.idx }}_R{{ option.id }}" type="radio" value="{{ option.id }}">
+                        <label for="Q_{{ q.idx }}_R{{ option.id }}">{{ option.value }}</label>
+                        </div>
+                    </div>
+                    <div *ngIf="q.type==='checkbox'">
+                        <div class="checkbox" *ngFor="let option of q.options">
+                        <input name="Q{{ q.idx }}" id="Q_{{ q.idx }}_R{{ option.id }}" type="checkbox" value="{{ option.id }}">
+                        <label for="Q_{{ q.idx }}_R{{ option.id }}">{{ option.value }}</label>
+                        </div>
+                    </div>
+                    <div *ngIf="q.type==='pointrating'">
+                        <span *ngFor="let option of q.options">
+                        <input name="Q{{ q.idx }}" id="Q_{{ q.idx }}_R{{ option.id }}" type="radio" value="{{ option.id }}">
+                        <label for="Q_{{ q.idx }}_R{{ option.id }}">{{ option.value }}</label>&nbsp;
+                        </span>
+                    </div>
+                    <div *ngIf="q.type==='dropdown'">
+                        <select name="Q{{ q.idx }}">
+                            <option *ngFor="let option of q.options" value="{{ option.id }}">{{ option.value }}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="q.type==='singleline'">
+                        <div>
+                            <input type="textbox" name="Q{{ q.idx }}" size="35">
+                        </div>
+                    </div>
+                    <div *ngIf="q.type==='multiline'">
+                        <div>
+                            <textarea name="Q{{ q.idx }}" row="10" cols="35"></textarea>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+            <input type="submit" class="btn btn-primary" name="public-submit" value="Submit"/>
+    </form>
+    </div>
+<ng-template #elseBlock>{{ surveyObject }}</ng-template>
+</div>
+
+<a (click)="display()"> Display Object</a>
