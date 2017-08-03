@@ -1,5 +1,5 @@
-<div class="container survey" *ngIf="surveyObject">
-    <div class="panel panel-success">
+<div class="container survey" *ngIf="isObject(); else elseBlock">
+    <div class="panel panel-primary" *ngIf="surveyObject">
         <div class="panel-heading">{{ surveyObject.title }}</div>
         <div class="panel-body">{{ surveyObject.description }}</div>
         <form method="post" action="/response">
@@ -41,10 +41,17 @@
                     </div>
                 </li>
             </ol>
-            <input type="submit" class="btn btn-primary" name="public-submit" value="Submit"/>
+            <button class="btn btn-primary" type="submit">Submit</button>
     </form>
     </div>
-<ng-template #elseBlock>{{ surveyObject }}</ng-template>
 </div>
+<ng-template #elseBlock>
+    <div class="container survey">
+        <div class="panel panel-warning">
+            <div class="panel-heading">Error</div>
+            <div class="panel-body">{{ surveyObject }}</div>
+        </div>
+    </div>
+</ng-template>
 
-<a (click)="display()"> Display Object</a>
+ <a (click)="display()"> Display Object</a> 

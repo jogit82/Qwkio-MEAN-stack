@@ -9,6 +9,9 @@ import { Component, Input } from '@angular/core';
 export class SurveyPreviewComponent {
     @Input() surveyObject;
 
+    isObject() {
+        return typeof this.surveyObject != 'string';
+    }
 
     display() {
         console.log(this.surveyObject);

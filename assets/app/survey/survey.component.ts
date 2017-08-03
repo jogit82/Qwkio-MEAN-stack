@@ -14,5 +14,5 @@ import { Component } from '@angular/core';
 })
 
 export class SurveyComponent {
-    private survey: any;
+    // private survey: any;
 }

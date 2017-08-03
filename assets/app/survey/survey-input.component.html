@@ -3,29 +3,29 @@
             <div class="panel-heading">Create a survey</div>
             <div class="panel-body">
                     <form action="/" method="post">
-                        <div class="form-group">
-                            <textarea #rawtext rows="22" cols="100">
-                                Enter your survey title here
-                                Any text you enter here will display below the title.
-                                1) Example multiple choice question
-                                [ ] One
-                                [ ] Two
-                                [ ] Three
-                                2) Example radio list question
-                                ( ) One
-                                ( ) Two
-                                ( ) Three
-                                3) Example rating between 1-5
-                                (1) (2) (3) (4) (5)
-                                4) Example text response question
-                                ___
-                                5) You can do a multi-line textbox too!
-                                ___
-                                ___
-                                6) Example dropdown question
-                                < > One
-                                < > Two
-                                < > Three
+                        <div class="form-group col-md-12">
+                            <textarea #rawtext rows="22" wrap="hard" class="form-control" cols="100">
+Enter your survey title here
+Any text you enter here will display below the title.
+1) Example multiple choice question
+[ ] One
+[ ] Two
+[ ] Three
+2) Example radio list question
+( ) One
+( ) Two
+( ) Three
+3) Example rating between 1-5
+(1) (2) (3) (4) (5)
+4) Example text response question
+___
+5) You can do a multi-line textbox too!
+___
+___
+6) Example dropdown question
+< > One
+< > Two
+< > Three
                             </textarea>
                         </div>
                     <button class="btn btn-primary" type="submit">Submit</button>

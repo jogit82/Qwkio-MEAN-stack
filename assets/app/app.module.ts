@@ -1,3 +1,4 @@
+import { TestComponent } from './test.component';
 import { LegalComponent } from './home/legal.component';
 import { ExamplesComponent } from './home/examples.component';
 import { GuidelinesComponent } from './home/guidelines.component';
@@ -23,7 +24,8 @@ import { SurveyPreviewComponent } from './survey/survey-preview.component';
         AboutComponent,
         GuidelinesComponent,
         ExamplesComponent,
-        LegalComponent
+        LegalComponent,
+        TestComponent
     ],
     imports: [
         BrowserModule,

@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
     providers: [SurveyService]
 })
 export class AppComponent {
+
+    counterValue = 0;
     // loadedFeature = 'survey';
 
     // onNavigate(feature: string) {
