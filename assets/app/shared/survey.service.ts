@@ -7,7 +7,6 @@ import 'rxjs/Rx';
 @Injectable()
 export class SurveyService {
     constructor(private http: Http) {}
-    
     // Save survey to MongoDB
     saveSurvey(rawtext: string){
         const body = JSON.stringify(rawtext);
