@@ -42,4 +42,8 @@ app.use(function(req, res, next) {
   res.render('index');
 });
 
+// var server = app.listen(4200, function() {
+//     console.log('Ready on port %d', server.address().port);
+// });
+
 module.exports = app;

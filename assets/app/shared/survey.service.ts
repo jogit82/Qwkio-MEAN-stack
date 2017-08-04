@@ -1,25 +1,20 @@
 import { Observable } from 'rxjs/Rx';
-import { Http, Response, Headers } from '@angular/http';
+import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Survey } from "../survey/survey.model";
 import 'rxjs/Rx';
 
 @Injectable()
 export class SurveyService {
-    constructor(private http: Http) {
-
-    }
+    constructor(private http: Http) {}
+    
     // Save survey to MongoDB
     saveSurvey(rawtext: string){
-        console.log("saving...");
         const body = JSON.stringify(rawtext);
         const headers = new Headers({'Content-Type': 'application/json'});// ... Set content type to JSON
-        return this.http.post('http://localhost:3000/survey', body, {headers: headers})// ...using post request
-        .map((response: Response) => {// ...and calling .json() on the response to return data
-            const result = response.json();
-            const survey = new Survey
-            (result.obj.rawtext, rawtext);
-        })
+        const options = new RequestOptions({headers: headers});
+        return this.http.post('http://localhost:3000/survey', body, options)// ...using post request
+        .map((res:Response) => res.json()) 
         .catch((error: Response) => Observable.throw(error.json())); //...errors if any
     }
 

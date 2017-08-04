@@ -7,7 +7,7 @@ const highwayhash = require('highwayhash');
 // input is a Buffer to calculate a hash value of
 const key = require('crypto').randomBytes(32);
 
-router.get('/survey/:ak', function(req, res, next) {
+router.get('/:ak', function(req, res, next) {
   Survey.findOne({adminkey: req.params.ak}, function(err, doc) {
     if (err) {
       return res.send('Error');
@@ -16,27 +16,33 @@ router.get('/survey/:ak', function(req, res, next) {
   });
 });
 
+router.get('/', function(req, res, next) {
+  console.log("Get works!");
+});
+
 router.post('/', function(req, res, next) {
-  var rawtext = req.body.rawtext;
-  var ak = Date.now();
-  const input = Buffer.from(ak.toString);
-  var hash_ak = highwayhash.asHexString(key, input);
-  survey = new Survey({
-    adminkey: hash_ak,
-    rawtext: rawtext
-  });
-  survey.save(function(err, result) {
-    if (err) {
-        return res.status(500).json({
-            title: 'An error occured',
-            error: err
-        });
-    }
-    res.status(201).json({
-        message: 'Saved survey',
-        obj: result
-    });
-  });
+  console.log("Saving");
+  // console.log(req.body);
+  // var rawtext = req.body.rawtext;
+  // var ak = Date.now();
+  // const input = Buffer.from(ak.toString);
+  // var hash_ak = highwayhash.asHexString(key, input);
+  // survey = new Survey({
+  //   adminkey: hash_ak,
+  //   rawtext: rawtext
+  // });
+  // survey.save(function(err, result) {
+  //   if (err) {
+  //       return res.status(500).json({
+  //           title: 'An error occured',
+  //           error: err
+  //       });
+  //   }
+  //   res.status(201).json({
+  //       message: 'Saved survey',
+  //       obj: result
+  //   });
+  // });
 });
 //   var rawtext = req.body.survey;
 //   var ak = Date.now();

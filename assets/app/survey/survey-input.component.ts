@@ -23,8 +23,7 @@ export class SurveyInputComponent {
     }
 
     onSubmit(rawtext: string){
-        console.log("submitting");
-        console.log(rawtext);
+        console.log("onSubmit");
         this.surveyService.saveSurvey(rawtext);
     }
     
