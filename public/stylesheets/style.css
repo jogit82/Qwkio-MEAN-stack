@@ -29,3 +29,7 @@ input.ng-invalid.ng-touched {
 .panel-heading {
   font-size: 18px;
 }
+
+.survey_list {
+  list-style-type: none;
+}

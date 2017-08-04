@@ -1,9 +1,27 @@
-import { isEmpty } from 'rxjs/operator/isEmpty';
+import { Observable } from 'rxjs/Rx';
+import { Http, Response, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
-// import { Survey } from "../survey/survey.model";
+import { Survey } from "../survey/survey.model";
+import 'rxjs/Rx';
 
 @Injectable()
 export class SurveyService {
+    constructor(private http: Http) {
+
+    }
+    // Save survey to MongoDB
+    saveSurvey(rawtext: string){
+        console.log("saving...");
+        const body = JSON.stringify(rawtext);
+        const headers = new Headers({'Content-Type': 'application/json'});// ... Set content type to JSON
+        return this.http.post('http://localhost:3000/survey', body, {headers: headers})// ...using post request
+        .map((response: Response) => {// ...and calling .json() on the response to return data
+            const result = response.json();
+            const survey = new Survey
+            (result.obj.rawtext, rawtext);
+        })
+        .catch((error: Response) => Observable.throw(error.json())); //...errors if any
+    }
 
     /*
     Helper method
@@ -30,7 +48,7 @@ export class SurveyService {
         let is_pointrating = false;
         let curQuestion = null;
         let idx = 1;
-        let lines = rawtext.split('\n')
+        let lines = rawtext.split('\n');
         
         for (let line of lines) {
             line = line.trim();
@@ -115,7 +133,7 @@ export class SurveyService {
             }
         }
         if (questions.length === 0) {
-            return "No question!";
+            return "Sorry, invalid format. Please refer to our survey guidelines.";
         }
         else {
             obj2['questions'] = questions;

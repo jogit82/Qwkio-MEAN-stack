@@ -1,10 +1,10 @@
 <div class="container">
-      <div class="panel panel-info">
+      <div class="row panel panel-info">
             <div class="panel-heading">Create a survey</div>
             <div class="panel-body">
-                    <form action="/" method="post">
+                    <form action="/survey" method="post">
                         <div class="form-group col-md-12">
-                            <textarea #rawtext rows="22" wrap="hard" class="form-control" cols="100">
+<textarea #rawtext rows="22" wrap="hard" class="form-control" cols="100" (input)="onPreview(rawtext.value)">
 Enter your survey title here
 Any text you enter here will display below the title.
 1) Example multiple choice question
@@ -26,10 +26,10 @@ ___
 < > One
 < > Two
 < > Three
-                            </textarea>
+</textarea>
                         </div>
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                    <a (click)="onPreview(rawtext.value)"> Preview</a>
+                    <button class="btn btn-primary" type="submit" (click)="onSubmit(rawtext.value)" *ngIf="isValidSurvey();">Submit</button>
+                    <!-- <a (click)="onPreview(rawtext.value)"> Preview</a> -->
                 </form>
             </div>
       </div>

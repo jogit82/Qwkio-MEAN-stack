@@ -1,4 +1,4 @@
-import { TestComponent } from './test.component';
+import { HttpModule } from '@angular/http';
 import { LegalComponent } from './home/legal.component';
 import { ExamplesComponent } from './home/examples.component';
 import { GuidelinesComponent } from './home/guidelines.component';
@@ -24,13 +24,13 @@ import { SurveyPreviewComponent } from './survey/survey-preview.component';
         AboutComponent,
         GuidelinesComponent,
         ExamplesComponent,
-        LegalComponent,
-        TestComponent
+        LegalComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        FormsModule
+        FormsModule,
+        HttpModule
     ],
     bootstrap: [AppComponent]
 })

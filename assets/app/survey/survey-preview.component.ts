@@ -1,4 +1,3 @@
-import { QueueAction } from 'rxjs/scheduler/QueueAction';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -11,10 +10,6 @@ export class SurveyPreviewComponent {
 
     isObject() {
         return typeof this.surveyObject != 'string';
-    }
-
-    display() {
-        console.log(this.surveyObject);
     }
 
 }

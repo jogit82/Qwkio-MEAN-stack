@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-    counterValue = 0;
     // loadedFeature = 'survey';
 
     // onNavigate(feature: string) {

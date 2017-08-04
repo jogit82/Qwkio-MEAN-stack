@@ -17,5 +17,15 @@ export class SurveyInputComponent {
         this.surveyObject = this.surveyService.convertToJSON(rawtext);
         this.previewClicked.emit(this.surveyObject);
     }
+
+    isValidSurvey() {
+        return typeof this.surveyObject != 'string';
+    }
+
+    onSubmit(rawtext: string){
+        console.log("submitting");
+        console.log(rawtext);
+        this.surveyService.saveSurvey(rawtext);
+    }
     
 }
