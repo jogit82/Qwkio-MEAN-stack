@@ -1,4 +1,4 @@
-import { Event } from '@angular/router';
+import { Event, Router } from '@angular/router';
 import { SurveyService } from '../shared/survey.service';
 import { Survey } from './survey.model';
 import { Component, EventEmitter, Output } from '@angular/core';
@@ -13,7 +13,8 @@ import 'rxjs/Rx';
 export class SurveyInputComponent {
     @Output() previewClicked = new EventEmitter<any>();
     private surveyObject;
-    constructor(private surveyService: SurveyService) {}
+    private survey: Survey;
+    constructor(private surveyService: SurveyService, private router: Router) {}
 
     onPreview(rawtext: string) {
         this.surveyObject = this.surveyService.convertToJSON(rawtext);
@@ -22,12 +23,20 @@ export class SurveyInputComponent {
 
     isValidSurvey() {
         return typeof this.surveyObject != 'string';
+        // TODO: Need a better way of doing this.
     }
 
     onSubmit(rawtext: string){
-        console.log("onSubmit");
-        this.surveyService.saveSurvey(rawtext);
-        // this.surveyService.saveSurvey(rawtext).subscribe(val => console.log(val));
+        const survey = new Survey(rawtext);
+        this.surveyService.saveSurvey(survey)
+        .subscribe(
+            data => {
+                this.survey = data.obj;
+                // console.log(data);
+                this.router.navigate(['/survey/admin/' + this.survey.adminkey]);
+            },
+            err => console.error(err)
+        );
     }
     
 }

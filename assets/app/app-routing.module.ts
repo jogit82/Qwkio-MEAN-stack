@@ -1,3 +1,4 @@
+import { AdminComponent } from './survey/admin.component';
 import { LegalComponent } from './home/legal.component';
 import { ExamplesComponent } from './home/examples.component';
 import { GuidelinesComponent } from './home/guidelines.component';
@@ -10,6 +11,7 @@ import { SurveyComponent } from './survey/survey.component';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/create', pathMatch: 'full' },
     { path: 'create', component: SurveyComponent },
+    { path: 'survey/admin/:id', component: AdminComponent },
     { path: 'about', component: AboutComponent },
     { path: 'examples', component: ExamplesComponent },
     { path: 'guidelines', component: GuidelinesComponent },

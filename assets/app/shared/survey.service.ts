@@ -1,34 +1,41 @@
 import { Observable } from 'rxjs/Rx';
-import { Headers, Http, RequestOptions, Response } from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Survey } from "../survey/survey.model";
 import 'rxjs/Rx';
 
 @Injectable()
 export class SurveyService {
+    private surveys: Survey[] = [];
+    private survey: Survey;
+    private data: Object;
     constructor(private http: Http) {}
-    // Save survey to MongoDB
 
-    public saveSurvey(rawtext: string) {
+    public saveSurvey(survey: Survey) {
+        const baseUrl = 'http://localhost:3000/survey';
+        const body = JSON.stringify(survey);
         const headers = new Headers();
-        headers.append('Content-Type', 'aaplication/json');
+        headers.append('Content-Type', 'application/json');
 
-        this.http.post('http://localhost:3000/survey', JSON.stringify(rawtext), {headers})
-        .map(res => res.json())
-        .subscribe(err => console.log(err)
+        const request = this.http.post(baseUrl, body, {headers})
+                        .map(res => res.json())
+                        .catch(
+                            (error: Response) => Observable.throw(error.json())
+                        );
+
+        request.subscribe(
+            data => {
+                this.data = data.obj;
+                // console.log(this.data);
+            }
         );
+        return request;
+        
     }
-    // saveSurvey(rawtext: string){
-    //     var body = JSON.stringify(rawtext);
-    //     var headers = new Headers();
-    //     headers.append('Content-Type', 'application/json');// ... Set content type to JSON
-    //     var options = new RequestOptions({headers: headers});
-    //     return this.http.post('http://localhost:3000/survey', body, options)
-    //     // .subscribe(err => console.log(err))// ...using post request
-    //     .map((res:Response) => res.json()) 
-    //     .catch((error: Response) => Observable.throw(error.json()))
-    //     ; //...errors if any
-    // }
+
+    public getSurvey() {
+        return this.data;
+    }
 
     /*
     Helper method

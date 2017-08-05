@@ -16,91 +16,34 @@ router.get('/:ak', function(req, res, next) {
   });
 });
 
-router.get('/', function(req, res, next) {
-  console.log("Get works!");
-});
+// router.get('/admin/:id', function(req, res, next) {
+//   console.log("Admin works!");
+// });
 
 router.post('/', function(req, res, next) {
-  console.log('Saving');
-  // console.log(req.body);
-  // var rawtext = req.body.rawtext;
+  var rawtext = req.body.rawtext;
   var ak = Date.now();
   const input = Buffer.from(ak.toString);
   var hash_ak = highwayhash.asHexString(key, input);
   survey = new Survey({
     adminkey: hash_ak,
-    rawtext: 'rawtext'
+    rawtext: rawtext
   });
-  survey.save(function(err, result) {
+  survey.save(function(err, data) {
     if (err) {
         return res.status(500).json({
-            title: 'An error occured',
-            error: err
+          title: 'An error occured',
+          error: err
         });
     }
-    res.status(201).json({
-        message: 'Saved survey',
-        obj: result
-    });
+    else {
+      res.status(201).json({
+        message: 'Survey Id: ' + data.surveyid + '. Admin Key: ' + data.adminkey,
+        obj: data
+      });
+      // res.redirect('/survey/' + hash_ak);
+    }
   });
 });
-//   var rawtext = req.body.survey;
-//   var ak = Date.now();
-//   const input = Buffer.from(ak.toString);
-//   var hash_ak = highwayhash.asHexString(key, input);
-//   survey = new Survey({
-//     adminkey: hash_ak,
-//     rawtext: rawtext
-//   });
-// if (surveyController.validatesurvey(survey)) { 
-//     survey.save(function(err, result) {
-//     if (err) {
-//         return res.status(500).json({
-//             title: 'An error occured',
-//             error: err
-//         });
-//     }
-//     else {
-//         res.status(201).json({
-//             message: 'Saved survey',
-//             obj: result
-//         });
-//         res.redirect('/survey/' + hash_ak);
-//     }
-    
-//   });
-
-
-// //   survey.save();
-// //   res.redirect('/survey/' + hash_ak);
-// }
-
-
-
-
-// else
-//   res.send('invalid survey format');
-//   // res.redirect('/invalid', { survey: survey }); // todo set up this page
-// });
-
-/* GET home page. */
-// router.post('/', function(req, res, next) { // it is actually /survey/ because its routed from app.js in the main folder which has a prefix of /survey
-//   // store in Mongodb
-//   var survey = new Survey({
-
-//   });
-//   survey.save(function(err, result) {
-//     if (err) {
-//         return res.status(500).json({
-//             title: 'An error occured',
-//             error: err
-//         });
-//     }
-//     res.status(201).json({
-//         message: 'Saved survey',
-//         obj: result
-//     });
-//   });
-// });
 
 module.exports = router;

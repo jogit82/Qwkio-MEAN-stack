@@ -1,3 +1,4 @@
+import { AdminComponent } from './survey/admin.component';
 import { HttpModule } from '@angular/http';
 import { LegalComponent } from './home/legal.component';
 import { ExamplesComponent } from './home/examples.component';
@@ -21,6 +22,7 @@ import { SurveyPreviewComponent } from './survey/survey-preview.component';
         SurveyComponent,
         SurveyInputComponent,
         SurveyPreviewComponent,
+        AdminComponent,
         AboutComponent,
         GuidelinesComponent,
         ExamplesComponent,
