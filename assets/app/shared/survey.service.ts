@@ -8,14 +8,27 @@ import 'rxjs/Rx';
 export class SurveyService {
     constructor(private http: Http) {}
     // Save survey to MongoDB
-    saveSurvey(rawtext: string){
-        const body = JSON.stringify(rawtext);
-        const headers = new Headers({'Content-Type': 'application/json'});// ... Set content type to JSON
-        const options = new RequestOptions({headers: headers});
-        return this.http.post('http://localhost:3000/survey', body, options)// ...using post request
-        .map((res:Response) => res.json()) 
-        .catch((error: Response) => Observable.throw(error.json())); //...errors if any
+
+    public saveSurvey(rawtext: string) {
+        const headers = new Headers();
+        headers.append('Content-Type', 'aaplication/json');
+
+        this.http.post('http://localhost:3000/survey', JSON.stringify(rawtext), {headers})
+        .map(res => res.json())
+        .subscribe(err => console.log(err)
+        );
     }
+    // saveSurvey(rawtext: string){
+    //     var body = JSON.stringify(rawtext);
+    //     var headers = new Headers();
+    //     headers.append('Content-Type', 'application/json');// ... Set content type to JSON
+    //     var options = new RequestOptions({headers: headers});
+    //     return this.http.post('http://localhost:3000/survey', body, options)
+    //     // .subscribe(err => console.log(err))// ...using post request
+    //     .map((res:Response) => res.json()) 
+    //     .catch((error: Response) => Observable.throw(error.json()))
+    //     ; //...errors if any
+    // }
 
     /*
     Helper method

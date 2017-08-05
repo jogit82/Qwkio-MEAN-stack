@@ -2,6 +2,8 @@ import { Event } from '@angular/router';
 import { SurveyService } from '../shared/survey.service';
 import { Survey } from './survey.model';
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/Rx';
 
 @Component({
     selector: 'app-survey-input',
@@ -25,6 +27,7 @@ export class SurveyInputComponent {
     onSubmit(rawtext: string){
         console.log("onSubmit");
         this.surveyService.saveSurvey(rawtext);
+        // this.surveyService.saveSurvey(rawtext).subscribe(val => console.log(val));
     }
     
 }

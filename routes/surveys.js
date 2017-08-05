@@ -21,15 +21,15 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  console.log("Saving");
-  console.log(req.body);
-  var rawtext = req.body.rawtext;
+  console.log('Saving');
+  // console.log(req.body);
+  // var rawtext = req.body.rawtext;
   var ak = Date.now();
   const input = Buffer.from(ak.toString);
   var hash_ak = highwayhash.asHexString(key, input);
   survey = new Survey({
     adminkey: hash_ak,
-    rawtext: rawtext
+    rawtext: 'rawtext'
   });
   survey.save(function(err, result) {
     if (err) {
