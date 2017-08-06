@@ -5,12 +5,12 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'app-admin',
     templateUrl: `
-          <h3>admin panel</h3>
+        <h3>admin panel</h3>
 
-          Admin Link: <a href='{{ baseUrl }}{{ data['adminkey'] }}'>
-              {{ baseUrl }}{{ data['adminkey'] }}
-
-
+        Admin Link: <a href="{{ baseUrl }}admin/{{ data['adminkey'] }}">
+              {{ baseUrl }}admin/{{ data['adminkey'] }} </a> <br>
+        Public Link: <a href="{{ baseUrl }}{{ publicKey }}">
+              {{ baseUrl }}{{ publicKey }}</a>
     `
 })
 
@@ -26,5 +26,4 @@ export class AdminComponent implements OnInit {
         this.publicKey = this.data['surveyid'].toString(36);
     }
 }
-        //   Public Link: <a href='{{ baseUrl }}{{ publicKey }}'>
-        //       {{ baseUrl }}{{ publicKey }}</a>
+        
