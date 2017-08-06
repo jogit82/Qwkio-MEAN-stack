@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Survey } from './survey.model';
 import { SurveyService } from '../shared/survey.service';
 import { Component, OnInit } from '@angular/core';
@@ -6,24 +7,19 @@ import { Component, OnInit } from '@angular/core';
     selector: 'app-admin',
     templateUrl: `
         <h3>admin panel</h3>
-
-        Admin Link: <a href="{{ baseUrl }}admin/{{ data['adminkey'] }}">
-              {{ baseUrl }}admin/{{ data['adminkey'] }} </a> <br>
-        Public Link: <a href="{{ baseUrl }}{{ publicKey }}">
-              {{ baseUrl }}{{ publicKey }}</a>
+        <p>Public Link: <a href="http://localhost:3000/{{ publicKey }}">http://localhost:3000/{{ publicKey }}</a></p>
+        <p>Admin Link: <a href="http://localhost:3000/survey/{{ adminKey }}">http://localhost:3000/survey/{{ adminKey }}</a></p>
     `
 })
 
 export class AdminComponent implements OnInit {
-    private baseUrl: string = 'localhost:3000/survey/';
-    private data: Object;
     private publicKey: string;
-    private backToi: number;
-    constructor(private surveyService: SurveyService){}
+    private adminKey: string;
+    constructor(private surveyService: SurveyService, private sanitizer: DomSanitizer){}
 
     ngOnInit() {
-        this.data = this.surveyService.getSurvey();
-        this.publicKey = this.data['surveyid'].toString(36);
+        const data = this.surveyService.getSurvey();
+        this.publicKey = data['surveyid'].toString(36);
+        this.adminKey = data['adminkey'];
     }
 }
-        
