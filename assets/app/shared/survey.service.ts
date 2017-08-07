@@ -6,35 +6,31 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class SurveyService {
-    private surveys: Survey[] = [];
-    private survey: Survey;
-    private data: Object;
     constructor(private http: Http) {}
 
     public saveSurvey(survey: Survey) {
-        const baseUrl = 'http://localhost:3000/survey';
+        const baseUrl = 'http://localhost:3000/admin';
         const body = JSON.stringify(survey);
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        const request = this.http.post(baseUrl, body, {headers})
-                        .map(res => res.json())
-                        .catch(
-                            (error: Response) => Observable.throw(error.json())
-                        );
-
-        request.subscribe(
-            data => {
-                this.data = data.obj;
-                // console.log(this.data);
-            }
+        return this.http.post(baseUrl, body, {headers})
+        .map(res => res.json())
+        .catch(
+            (error: Response) => Observable.throw(error.json())
         );
-        return request;
-        
     }
 
-    public getSurvey() {
-        return this.data;
+    public getSurvey(adminkey: string) {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        console.log("GET SURVEY CALL");
+        return this.http.get('http://localhost:3000/admin/' + adminkey, {headers})
+        .map(res => res.json())
+        .catch(
+            (error: Response) => Observable.throw(error.json())
+        );
+        // return "data";
     }
 
     /*

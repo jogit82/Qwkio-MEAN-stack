@@ -32,8 +32,7 @@ export class SurveyInputComponent {
         .subscribe(
             data => {
                 this.survey = data.obj;
-                // console.log(data);
-                this.router.navigate(['/survey/admin/' + this.survey.adminkey]);
+                this.router.navigate(['/admin/', this.survey.adminkey]);
             },
             err => console.error(err)
         );

@@ -1,4 +1,4 @@
-import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { Survey } from './survey.model';
 import { SurveyService } from '../shared/survey.service';
 import { Component, OnInit } from '@angular/core';
@@ -8,18 +8,34 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: `
         <h3>admin panel</h3>
         <p>Public Link: <a href="http://localhost:3000/{{ publicKey }}">http://localhost:3000/{{ publicKey }}</a></p>
-        <p>Admin Link: <a href="http://localhost:3000/survey/{{ adminKey }}">http://localhost:3000/survey/{{ adminKey }}</a></p>
+        <p>Admin Link: <a href="http://localhost:3000/admin/{{ adminKey }}">http://localhost:3000/admin/{{ adminKey }}</a></p>
     `
 })
 
 export class AdminComponent implements OnInit {
     private publicKey: string;
     private adminKey: string;
-    constructor(private surveyService: SurveyService, private sanitizer: DomSanitizer){}
+    constructor(private surveyService: SurveyService, private route: ActivatedRoute){}
 
     ngOnInit() {
-        const data = this.surveyService.getSurvey();
-        this.publicKey = data['surveyid'].toString(36);
-        this.adminKey = data['adminkey'];
+        this.route.params.subscribe(params => {
+            this.adminKey = params['id'];
+        });
+        this.surveyService.getSurvey(this.adminKey)
+        .subscribe(
+            data => {
+                this.publicKey = (data.obj.surveyid).toString(36);
+            },
+            err => console.error(err)
+        );
+        // const data = this.surveyService.getSurvey();
+        // this.publicKey = data['surveyid'].toString(36);
+        // this.adminKey = data['adminkey'];
     }
+
+
 }
+
+// <h3>admin panel</h3>
+//         <p>Public Link: <a href="http://localhost:3000/{{ publicKey }}">http://localhost:3000/{{ publicKey }}</a></p>
+//         <p>Admin Link: <a href="http://localhost:3000/admin/{{ adminKey }}">http://localhost:3000/admin/{{ adminKey }}</a></p>
