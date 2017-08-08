@@ -7,8 +7,7 @@ const highwayhash = require('highwayhash');
 // input is a Buffer to calculate a hash value of
 const key = require('crypto').randomBytes(32);
 
-router.get('/:ak', function(req, res, next) {
-  console.log("GET SURVEY ROUTER");
+router.get('/api/:ak', function(req, res, next) {
   Survey.findOne({adminkey: req.params.ak}, function(err, doc) {
     if (err) {
         return res.status(500).json({

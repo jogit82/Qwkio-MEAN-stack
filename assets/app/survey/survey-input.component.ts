@@ -1,4 +1,4 @@
-import { Event, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SurveyService } from '../shared/survey.service';
 import { Survey } from './survey.model';
 import { Component, EventEmitter, Output } from '@angular/core';
@@ -37,5 +37,4 @@ export class SurveyInputComponent {
             err => console.error(err)
         );
     }
-    
 }

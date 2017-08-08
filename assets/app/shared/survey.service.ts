@@ -24,13 +24,22 @@ export class SurveyService {
     public getSurvey(adminkey: string) {
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        console.log("GET SURVEY CALL");
-        return this.http.get('http://localhost:3000/admin/' + adminkey, {headers})
+        return this.http.get('http://localhost:3000/admin/api/' + adminkey, {headers})
         .map(res => res.json())
         .catch(
             (error: Response) => Observable.throw(error.json())
         );
-        // return "data";
+    }
+
+    public getPublicSurvey(pk: string) {
+        console.log("getPublicSurvey, " + pk);
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.get('http://localhost:3000/pk/' + pk, {headers})
+        .map(res => res.json())
+        .catch(
+            (error: Response) => Observable.throw(error.json())
+        );
     }
 
     /*
