@@ -91,31 +91,28 @@ export class SurveyService {
             }
             else if (is_multichoice && curQuestion) { // line is multiple choice checkbox
                 let curOption = {};
-                let i = 0;
                 curQuestion['type'] = curQuestion['type'] || 'checkbox';
                 curQuestion['options'] = curQuestion['options'] || [];
                 curQuestion['options'].push(curOption);
-                curOption['id'] = i;
+                curOption['id'] = curQuestion['options'].length;
                 curOption['value'] = line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim();
                 // curQuestion['options'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
             }
             else if (is_radio && curQuestion) { // line is radio options
                 let curOption = {};
-                let i = 0;
                 curQuestion['type'] = curQuestion['type'] || 'radio';
                 curQuestion['options'] = curQuestion['options'] || [];
                 curQuestion['options'].push(curOption);
-                curOption['id'] = i;
+                curOption['id'] = curQuestion['options'].length;
                 curOption['value'] = line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim();
                 // curQuestion['options'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
             }
             else if (is_dropdown && curQuestion) { // line is dropdown
                 let curOption = {};
-                let i = 0;
                 curQuestion['type'] = curQuestion['type'] || 'dropdown';
                 curQuestion['options'] = curQuestion['options'] || [];
                 curQuestion['options'].push(curOption);
-                curOption['id'] = i;
+                curOption['id'] = curQuestion['options'].length;
                 curOption['value'] = line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim();
                 // curQuestion['options'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
             }

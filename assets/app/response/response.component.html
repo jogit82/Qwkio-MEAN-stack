@@ -17,7 +17,12 @@
                     <p>{{ q.title }}</p>
                     <div *ngIf="q.type==='singleline'">
                         <div>
-                            <input type="textbox" name="Q{{ q.idx }}" size="35" ngModel>
+                            <input type="textbox" name="textbox" size="35" ngModel>
+                        </div>
+                    </div>
+                    <div *ngIf="q.type==='multiline'">
+                        <div>
+                            <textarea name="textarea" row="10" cols="35" ngModel></textarea>
                         </div>
                     </div>
                 </li>
