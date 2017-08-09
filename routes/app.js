@@ -9,9 +9,7 @@ router.get('/', function(req, res, next) {
 
 // Rendering survey on a public link so users can take the survey
 router.get('/pk/:pk', function(req, res, next) {
-    console.log("ROUTER GET, reqparamspk: " + req.params.pk);
     var surveyid = parseInt(req.params.pk, 36);
-    console.log(":pk after paseInt" + surveyid);
     Survey.findOne({surveyid: surveyid}, function(err, doc) {
         if (err) {
             return res.status(500).json({

@@ -6,7 +6,7 @@ var schema = new Schema({
     surveyid: { type: Number, required: true, ref: 'Survey' },
     userkey: { type: String, required: true },
     answers: { type: Array },
-    timestamp: { type: Date.now() }
+    timestamp: { type: String }
 });
 
 schema.index({

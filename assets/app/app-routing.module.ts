@@ -11,14 +11,14 @@ import { SurveyComponent } from './survey/survey.component';
 
 
 const appRoutes: Routes = [
-    { path: '', redirectTo: '/create', pathMatch: 'full' },
-    { path: 'create', component: SurveyComponent },
     { path: 'admin/:id', component: AdminComponent },
-    { path: ':id', component: ResponseComponent},
     { path: 'about', component: AboutComponent },
     { path: 'examples', component: ExamplesComponent },
     { path: 'guidelines', component: GuidelinesComponent },
-    { path: 'legal', component: LegalComponent }
+    { path: 'legal', component: LegalComponent },
+    { path: 'create', component: SurveyComponent },
+    { path: ':id', component: ResponseComponent},
+    { path: '', redirectTo: '/create', pathMatch: 'full' }
 ];
 
 export const AppRoutingModule = RouterModule.forRoot(appRoutes);

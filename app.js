@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var appRoutes = require('./routes/app');
 var surveyRoutes = require('./routes/survey');
 var adminRoutes = require('./routes/admin');
+var responseRoutes = require('./routes/response');
 
 var app = express();
 mongoose.connect('mongodb://localhost/qwkio_mean', {
@@ -38,6 +39,7 @@ app.use(function(req, res, next) {
 // handle req with specific route first before more generic routes.
 app.use('/admin', adminRoutes);
 app.use('/survey', surveyRoutes); 
+app.use('/response', responseRoutes); 
 app.use('/', appRoutes);
 
 // catch 404 and forward to error handler

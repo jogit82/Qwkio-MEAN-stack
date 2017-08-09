@@ -1,5 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../shared/survey.service';
+import { ResponseService } from '../shared/response.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
@@ -11,11 +12,10 @@ import 'rxjs/Rx';
 })
 
 export class ResponseComponent implements OnInit {
-    private surveyObject;
-    constructor(private surveyService: SurveyService, private route: ActivatedRoute){}
+    public surveyObject;
+    constructor(private surveyService: SurveyService, private route: ActivatedRoute, private responseService: ResponseService){}
 
     ngOnInit() {
-        console.log("hello");
         let pk: string;
         this.route.params.subscribe(params => {
             pk = params['id'];
@@ -32,5 +32,18 @@ export class ResponseComponent implements OnInit {
 
     isObject() {
         return typeof this.surveyObject != 'string';
+    }
+
+    // Survey Form
+    onSubmit(f: NgForm) {
+        this.responseService.saveResponse()
+        .subscribe(
+            data => {
+                console.log(data);
+            },
+            err => console.log(err)
+        );
+        // console.log(f.value);
+        // console.log(f.valid);
     }
 }

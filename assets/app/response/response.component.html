@@ -1,4 +1,37 @@
-<div class="container survey" *ngIf="isObject(); else elseBlock">
+ <!-- <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <input type="text" name="first" ngModel required #first="ngModel">
+    <input name="last" ngModel>
+    <button>Submit</button>
+</form> -->
+
+
+
+ <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <div class="container survey" *ngIf="isObject(); else elseBlock">
+        <div class="row panel panel-primary" *ngIf="surveyObject">
+            <div class="panel-heading">{{ surveyObject.title }}</div>
+            <div class="panel-body">{{ surveyObject.description }}</div>
+            <ul class="survey_list">
+                <li *ngFor="let q of surveyObject.questions">
+                    <p><u>Question {{ q.idx }}</u></p>
+                    <p>{{ q.title }}</p>
+                    <div *ngIf="q.type==='singleline'">
+                        <div>
+                            <input type="textbox" name="Q{{ q.idx }}" size="35" ngModel>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <button>Submit</button>
+</form> 
+<p>First name: {{ first.value }}</p>
+<p>First name valid: {{ first.valid }}</p>
+<p>Form Value: {{ f.value | json }}</p>
+<p>Form Valid: {{ f.valid }}</p>
+
+<!-- <div class="container survey" *ngIf="isObject(); else elseBlock">
     <div class="row panel panel-primary" *ngIf="surveyObject">
         <div class="panel-heading">{{ surveyObject.title }}</div>
         <div class="panel-body">{{ surveyObject.description }}</div>
@@ -51,4 +84,4 @@
         </div>
     </div>
     <app-survey-input></app-survey-input>
-</ng-template>
+</ng-template> -->
