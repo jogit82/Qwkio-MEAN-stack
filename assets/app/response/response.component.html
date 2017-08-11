@@ -15,14 +15,37 @@
                 <li *ngFor="let q of surveyObject.questions">
                     <p><u>Question {{ q.idx }}</u></p>
                     <p>{{ q.title }}</p>
+                    <div *ngIf="q.type==='radio'">
+                        <div class="radio" *ngFor="let option of q.options">
+                        <input type="radio" name="{{ q.idx }}" id="Q_{{ q.idx }}_R{{ option.id }}" value="{{ option.id }}" ngModel>
+                        <label for="Q_{{ q.idx }}_R{{ option.id }}">{{ option.value }}</label>
+                        </div>
+                    </div>
+                    <div *ngIf="q.type==='checkbox'">
+                        <div class="checkbox" *ngFor="let option of q.options">
+                        <input name="{{ q.idx }}" id="Q_{{ q.idx }}_R{{ option.id }}" type="checkbox" value="{{ option.id }}" ngModel>
+                        <label for="Q_{{ q.idx }}_R{{ option.id }}">{{ option.value }}</label>
+                        </div>
+                    </div>
+                    <div *ngIf="q.type==='pointrating'">
+                        <span *ngFor="let option of q.options">
+                        <input type="radio" name="{{ q.idx }}" id="Q_{{ q.idx }}_R{{ option.id }}" value="{{ option.id }}" ngModel>
+                        <label for="Q_{{ q.idx }}_R{{ option.id }}">{{ option.value }}</label>&nbsp;
+                        </span>
+                    </div>
+                    <div *ngIf="q.type==='dropdown'">
+                        <select name="{{ q.idx }}" ngModel>
+                            <option *ngFor="let option of q.options" value="{{ option.id }}">{{ option.value }}</option>
+                        </select>
+                    </div>
                     <div *ngIf="q.type==='singleline'">
                         <div>
-                            <input type="textbox" name="textbox" size="35" ngModel>
+                            <input type="textbox" name="{{ q.idx }}" size="35" ngModel>
                         </div>
                     </div>
                     <div *ngIf="q.type==='multiline'">
                         <div>
-                            <textarea name="textarea" row="10" cols="35" ngModel></textarea>
+                            <textarea name="{{ q.idx }}" row="10" cols="35" ngModel></textarea>
                         </div>
                     </div>
                 </li>
@@ -31,10 +54,7 @@
     </div>
     <button>Submit</button>
 </form> 
-<p>First name: {{ first.value }}</p>
-<p>First name valid: {{ first.valid }}</p>
-<p>Form Value: {{ f.value | json }}</p>
-<p>Form Valid: {{ f.valid }}</p>
+
 
 <!-- <div class="container survey" *ngIf="isObject(); else elseBlock">
     <div class="row panel panel-primary" *ngIf="surveyObject">

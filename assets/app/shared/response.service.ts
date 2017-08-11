@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Rx';
 import { Headers, Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { UserResponse } from "../response/userresponse.model";
+import { UserResponse } from "../response/user-response.model";
 import 'rxjs/Rx';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class ResponseService {
     constructor(private http: Http) {}
 
     public saveResponse(formValues) {
-        console.log(formValues);
+        // console.log(formValues);
         const baseUrl = 'http://localhost:3000/response';
         // const body = JSON.stringify(userResponse);
         const headers = new Headers();

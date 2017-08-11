@@ -37,13 +37,11 @@ export class ResponseComponent implements OnInit {
     // Survey Form
     onSubmit(f: NgForm) {
         console.log(this.surveyObject);
-        let textbox = f.value.textbox;
-        let textarea = f.value.textarea;
-        console.log(textbox, textarea);
+        console.log(f.controls['1'].value);
         this.responseService.saveResponse(f)
         .subscribe(
             data => {
-                console.log(data);
+                console.log("data");
             },
             err => console.log(err)
         );
