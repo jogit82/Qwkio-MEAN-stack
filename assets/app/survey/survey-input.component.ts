@@ -1,3 +1,4 @@
+import { Res } from 'awesome-typescript-loader/dist/checker/protocol';
 import { Router } from '@angular/router';
 import { SurveyService } from '../shared/survey.service';
 import { Survey } from './survey.model';
@@ -13,7 +14,6 @@ import 'rxjs/Rx';
 export class SurveyInputComponent {
     @Output() previewClicked = new EventEmitter<any>();
     private surveyObject;
-    private survey: Survey;
     constructor(private surveyService: SurveyService, private router: Router) {}
 
     onPreview(rawtext: string) {
@@ -31,8 +31,7 @@ export class SurveyInputComponent {
         this.surveyService.saveSurvey(survey)
         .subscribe(
             data => {
-                this.survey = data.obj;
-                this.router.navigate(['/admin/', this.survey.adminkey]);
+                this.router.navigate(['/admin/', data.obj.adminkey]);
             },
             err => console.error(err)
         );

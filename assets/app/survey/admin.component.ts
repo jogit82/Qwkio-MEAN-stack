@@ -24,6 +24,7 @@ export class AdminComponent implements OnInit {
         this.surveyService.getSurvey(this.adminKey)
         .subscribe(
             data => {
+                console.log(data);
                 this.publicKey = (data.obj.surveyid).toString(36);
             },
             err => console.error(err)

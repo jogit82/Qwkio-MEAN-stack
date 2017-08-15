@@ -1,3 +1,4 @@
+import { ArrayType } from '@angular/compiler/src/output/output_ast';
 export class UserResponse {
     constructor(public answers: any,
                 public surveyid: number,
@@ -6,6 +7,16 @@ export class UserResponse {
 }
 
 export class Answer {
-    public question: number;
-    public answer: string;
+    constructor(
+        public response: {
+            question: string;
+            answers: string;
+    }){}
 }
+
+/* 
+FormGroup -> 'answer'
+    FormGroup -> 'response'
+        FormControl -> 'question'
+        FormControl -> 'answers'
+*/

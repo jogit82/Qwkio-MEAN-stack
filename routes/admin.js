@@ -29,8 +29,8 @@ router.get('/api/:ak', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var rawtext = req.body.rawtext;
   var ak = Date.now();
-  const input = Buffer.from(ak.toString);
-  var hash_ak = highwayhash.asHexString(key, input);
+  const input = Buffer.from(ak.toString());
+  const hash_ak = highwayhash.asHexString(key, input);
   survey = new Survey({
     adminkey: hash_ak,
     rawtext: rawtext
@@ -44,7 +44,7 @@ router.post('/', function(req, res, next) {
     }
     else {
       res.status(201).json({
-        message: 'Survey Id: ' + data.surveyid + '. Admin Key: ' + data.adminkey,
+        message: 'Survey saved',
         obj: data
       });
     }
