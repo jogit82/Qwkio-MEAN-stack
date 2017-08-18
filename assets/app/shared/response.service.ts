@@ -9,13 +9,13 @@ export class ResponseService {
     constructor(private http: Http) {}
 
     public saveResponse(formValues) {
-        // console.log(formValues);
+        const body = JSON.stringify(formValues);
         const baseUrl = 'http://localhost:3000/response';
         // const body = JSON.stringify(userResponse);
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this.http.post(baseUrl, {headers})
+        return this.http.post(baseUrl, body, {headers})
         .map(res => res.json())
         .catch(
             (error: Response) => Observable.throw(error.json())

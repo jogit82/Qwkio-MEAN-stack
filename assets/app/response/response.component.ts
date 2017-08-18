@@ -63,15 +63,15 @@ export class ResponseComponent implements OnInit {
 
     // Survey Form
     onSubmit(f: NgForm) {
-        console.log(this.surveyObject);
+        // console.log(this.surveyObject);
         console.log(f.value);
-        // this.responseService.saveResponse(f)
-        // .subscribe(
-        //     data => {
-        //         console.log(data);
-        //     },
-        //     err => console.log(err)
-        // );
+        this.responseService.saveResponse(f)
+        .subscribe(
+            data => {
+                console.log(data);
+            },
+            err => console.log(err)
+        );
     }
 
     // onSubmit({value, valid}: {value: Answer, valid: boolean}){

@@ -9,6 +9,8 @@ const key = require('crypto').randomBytes(32);
 
 // Submit response
 router.post('/', function(req, res, next) {
+  console.log("======passed values");
+  console.log(req);
   var uk = Date.now();
   const input = Buffer.from(uk.toString());
   var hash_uk = highwayhash.asHexString(key, input);
