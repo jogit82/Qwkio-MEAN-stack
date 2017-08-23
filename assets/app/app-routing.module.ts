@@ -1,3 +1,4 @@
+import { ThankyouComponent } from './home/thankyou.component';
 import { ResponseComponent } from './response/response.component';
 import { SurveyPreviewComponent } from './survey/survey-preview.component';
 import { AdminComponent } from './survey/admin.component';
@@ -16,6 +17,7 @@ const appRoutes: Routes = [
     { path: 'examples', component: ExamplesComponent },
     { path: 'guidelines', component: GuidelinesComponent },
     { path: 'legal', component: LegalComponent },
+    { path: 'thankyou', component: ThankyouComponent },
     { path: 'create', component: SurveyComponent },
     { path: ':id', component: ResponseComponent},
     { path: '', redirectTo: '/create', pathMatch: 'full' }

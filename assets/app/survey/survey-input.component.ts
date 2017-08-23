@@ -1,4 +1,3 @@
-import { Res } from 'awesome-typescript-loader/dist/checker/protocol';
 import { Router } from '@angular/router';
 import { SurveyService } from '../shared/survey.service';
 import { Survey } from './survey.model';

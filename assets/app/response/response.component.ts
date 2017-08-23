@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../shared/survey.service';
 import { ResponseService } from '../shared/response.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,11 +14,11 @@ import 'rxjs/Rx';
 
 export class ResponseComponent implements OnInit {
     public surveyObject;
-    public checkboxValueObject: Object;
-    public listOfCheckboxQuestion: any[] = [];
+    public isClosed;
+    public checkboxValues: any[] = [];
     public answers: any[] = [];
 
-    constructor(private surveyService: SurveyService, private route: ActivatedRoute, private responseService: ResponseService){}
+    constructor(private surveyService: SurveyService, private route: ActivatedRoute, private router: Router, private responseService: ResponseService){}
 
     ngOnInit() {
         let pk: string;
@@ -29,55 +29,61 @@ export class ResponseComponent implements OnInit {
         .subscribe(
             data => {
                 let response = data.obj;
+                this.isClosed = true;
+                console.log(this.isClosed);
                 this.surveyObject = this.surveyService.convertToJSON(response.rawtext);
             },
             err => console.error(err)
         );
     }
 
-    isObject() {
-        return typeof this.surveyObject != 'string';
+    isOpen() {
+        return !this.isClosed != false;
     }
 
-    updateChecked(value, questionNum, event){
+    updateChecked(value, questionNum, questionType, event){
+        var answer = questionNum + '_' + value;
         if(event.target.checked){
-            console.log("moo");
-            // construct answers(Object, global) but only construct one object for each question with multiple values
-            // answers[0] = {
-            //    question: i + 1,
-            //     answer: values
-            // }
-            if (this.answers[questionNum - 1].question == questionNum){
-                console.log("not in the answers");
-            }
-            else 
-                console.log("Its already in the answers");
-        //   this.demoChk.push(value);
+            this.checkboxValues.push(answer);
         }
-        else if (!event.target.checked){
-        //   let indexx = this.demoChk.indexOf(value);
-        //   this.demoChk.splice(indexx,1);
+        else if (!event.target.unchecked){
+          let indexx = this.checkboxValues.indexOf(answer);
+          this.checkboxValues.splice(indexx,1);
         }
-        // console.log(this.demoChk.toString());
       }
 
     // Survey Form
     onSubmit(f: NgForm) {
+        var regQA = /^(\d+)_(\d+)$/;
         const numOfQuestion = this.surveyObject.questions.length;
-        // format response exactly to the number of questions
-        // let say we have 6 questions, so we need six answers(optional questions will be empty string '')
         for (let i = 0; i < numOfQuestion; i ++){
             this.answers[i] = {
                 question: i + 1,
                 answer: f.value[i + 1]
             }
+            if (this.answers[i].answer === false)
+                this.answers[i].answer = '';
         }
-        console.log(this.answers);
+        if (this.checkboxValues){
+            this.checkboxValues.sort();
+            for (var i = 0; i < this.checkboxValues.length; i ++) {
+                var q = regQA.exec(this.checkboxValues[i]);
+                if (this.answers[parseInt(q[1]) - 1 ].answer === true || this.answers[parseInt(q[1]) - 1 ].answer === false) {
+                    this.answers[parseInt(q[1]) - 1 ].answer = q[2];
+                }
+                else 
+                    this.answers[parseInt(q[1]) - 1 ].answer += ',' + q[2];
+            }
+        }
+        let data = { 
+            answers: this.answers,
+            surveyid : this.surveyid
+        }
 
-        this.responseService.saveResponse(this.answers)
+        this.responseService.saveResponse(data)
         .subscribe(
             data => {
-                console.log(data); // TODO: redirect to thank you page
+                this.router.navigate(['/thankyou']);
             },
             err => console.log(err)
         );

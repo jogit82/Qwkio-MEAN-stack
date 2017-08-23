@@ -1,3 +1,4 @@
+import { ThankyouComponent } from './home/thankyou.component';
 import { ResponseService } from './shared/response.service';
 import { SurveyService } from './shared/survey.service';
 import { ResponseComponent } from './response/response.component';
@@ -29,7 +30,8 @@ import { SurveyPreviewComponent } from './survey/survey-preview.component';
         AboutComponent,
         GuidelinesComponent,
         ExamplesComponent,
-        LegalComponent
+        LegalComponent,
+        ThankyouComponent
     ],
     imports: [
         BrowserModule,

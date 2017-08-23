@@ -13,17 +13,9 @@ router.post('/', function(req, res, next) {
   const input = Buffer.from(uk);
   var hash_uk = highwayhash.asHexString(key, input);
   response = new Response({
-    surveyid: '15578',
+    surveyid: req.body.surveyid,
     userkey: hash_uk,
-    answers: req.body,
-    // answers: [
-    //     {question: 1, answer: "1,2"}, 
-    //     {question: 2, answer: "1"},
-    //     {question: 3, answer: "5"},
-    //     {question: 4, answer: "hello textbox"},
-    //     {question: 5, answer: "hello textarea"},
-    //     {question: 6, answer: "1"}
-    // ],
+    answers: req.body.answers,
     timestamp: uk
   });
   response.save(function(err, data) {

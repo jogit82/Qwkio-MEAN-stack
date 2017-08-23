@@ -1,13 +1,5 @@
- <!-- <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-    <input type="text" name="first" ngModel required #first="ngModel">
-    <input name="last" ngModel>
-    <button>Submit</button>
-</form> -->
-
-
-
 <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-    <div class="container survey" *ngIf="isObject(); else elseBlock">
+    <div class="container survey" *ngIf="isOpen(); else elseBlock">
         <div class="row panel panel-primary" *ngIf="surveyObject">
             <div class="panel-heading">{{ surveyObject.title }}</div>
             <div class="panel-body">{{ surveyObject.description }}</div>
@@ -23,7 +15,7 @@
                     </div>
                     <div *ngIf="q.type==='checkbox'">
                         <div class="checkbox" *ngFor="let option of q.options">
-                        <input name="{{ q.idx }}" id="Q_{{ q.idx }}_R{{ option.id }}" type="checkbox" value="{{ option.id }}" (change)="updateChecked(option.id, q.idx, $event)" ngModel>
+                        <input name="{{ q.idx }}" id="Q_{{ q.idx }}_R{{ option.id }}" type="checkbox" value="{{ option.id }}" (change)="updateChecked(option.id, q.idx, q.type, $event)" ngModel>
                         <label for="Q_{{ q.idx }}_R{{ option.id }}">{{ option.value }}</label>
                         </div>
                     </div>
@@ -51,42 +43,25 @@
                 </li>
             </ul>
         </div>
+        <button type="submit">Submit</button>
     </div>
-    <button type="submit">Submit</button>
 </form> 
 
 <ng-template #elseBlock>
-    <div class="container survey">
-        <div class="row panel panel-warning">
-            <div class="panel-heading">No survey found.</div>
-        </div>
-    </div>
-    <app-survey-input></app-survey-input>
-</ng-template>
-
-
-<!-- 
-<form [formGroup]="answer" (ngSubmit)="onSubmit(answer)" novalidate>
-    <div *ngFor="let q of surveyObject.questions" formGroupName="response">
-        <label>
-          <span>Question</span>
-          <input type="text" formControlName="question">
-        </label>
-        
-        <label>
-          <span>Answers</span>
-          <input type="text" formControlName="answers">
-        </label>
-        
+    <div class="container">
+        <div class="panel panel-info">
+              <div class="panel-heading">Sorry</div>
+              <div class="panel-body">
+                  <div id="main" role="main">
+                      <div class="centered">
+                          <div id="admin-survey">
+                              <div class="survey-link">
+                              <p>Survey has been closed by the admin.</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-    <button type="submit"[disabled]="answer.invalid">Submit</button>
-</form> 
-
-<ng-template #elseBlock>
-    <div class="container survey">
-        <div class="row panel panel-warning">
-            <div class="panel-heading">No survey found.</div>
-        </div>
-    </div>
-    <app-survey-input></app-survey-input>
-</ng-template> -->
+</ng-template>
