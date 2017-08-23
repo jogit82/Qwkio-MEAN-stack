@@ -16,7 +16,7 @@ router.get('/api/:ak', function(req, res, next) {
         });
     }
     else {
-      console.log(doc);
+      // console.log(doc);
       res.status(201).json({
           message: 'Success',
           obj: doc
@@ -27,8 +27,8 @@ router.get('/api/:ak', function(req, res, next) {
 
 // Creating survey by admin
 router.post('/', function(req, res, next) {
-  var rawtext = req.body.rawtext;
-  var ak = Date.now();
+  const rawtext = req.body.rawtext;
+  const ak = Date.now();
   const input = Buffer.from(ak.toString());
   const hash_ak = highwayhash.asHexString(key, input);
   survey = new Survey({
@@ -49,6 +49,40 @@ router.post('/', function(req, res, next) {
       });
     }
   });
+});
+
+router.put('/close/:ak', function(req, res, next) {
+  Survey.findOneAndUpdate({adminkey: req.params.ak}, {$set:{closed: true}},{new: true}, function(err, doc) {
+    if (err) {
+        return res.status(500).json({
+          title: 'An error occured',
+          error: err
+        });
+    }
+    else {
+      res.status(201).json({
+          message: 'Success',
+          obj: doc
+      });
+    }
+  });   
+});
+
+router.put('/open/:ak', function(req, res, next) {
+  Survey.findOneAndUpdate({adminkey: req.params.ak}, {$set:{closed: false}}, {new: true}, function(err, doc) {
+    if (err) {
+        return res.status(500).json({
+          title: 'An error occured',
+          error: err
+        });
+    }
+    else {
+      res.status(201).json({
+          message: 'Success',
+          obj: doc
+      });
+    }
+  });   
 });
 
 module.exports = router;

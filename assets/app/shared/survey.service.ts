@@ -41,6 +41,28 @@ export class SurveyService {
         );
     }
 
+    public close(ak: string){
+        console.log("closing survey");
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.put('http://localhost:3000/admin/close/' + ak, {headers})
+        .map(res => res.json())
+        .catch(
+            (error: Response) => Observable.throw(error.json())
+        );
+    }
+
+    public open(ak){
+        console.log("opening survey");
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.put('http://localhost:3000/admin/open/' + ak, {headers})
+        .map(res => res.json())
+        .catch(
+            (error: Response) => Observable.throw(error.json())
+        );
+    }
+
     /*
     Helper method
     :Format validation - do not save to database if its not the right format

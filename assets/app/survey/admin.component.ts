@@ -30,10 +30,9 @@ export class AdminComponent implements OnInit {
         this.surveyService.getSurvey(this.adminKey)
         .subscribe(
             data => {
-                // console.log(data);
                 if (data.obj.closed === false)
                     this.value = 'Close';
-                else {
+                else if (data.obj.closed === true){
                     this.value = 'Open';
                 }
                 this.publicKey = (data.obj.surveyid).toString(36);
@@ -44,11 +43,22 @@ export class AdminComponent implements OnInit {
 
     changeStatus(){
         if (this.value === 'Open'){
-            // this.surveyService.close();
-            this.value = 'Close';
+            this.surveyService.open(this.adminKey).subscribe(
+                data => {
+                    this.value = 'Close';
+                },
+                err => console.error(err)
+            );
+            
         }
-        else 
-            this.value = 'Open';
+        else if (this.value === 'Close'){
+            this.surveyService.close(this.adminKey).subscribe(
+                data => {
+                    this.value = 'Open';
+                },
+                err => console.error(err)
+            );
+        }
     }
 
 

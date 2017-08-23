@@ -29,8 +29,7 @@ export class ResponseComponent implements OnInit {
         .subscribe(
             data => {
                 let response = data.obj;
-                this.isClosed = true;
-                console.log(this.isClosed);
+                this.isClosed = response.closed;
                 this.surveyObject = this.surveyService.convertToJSON(response.rawtext);
             },
             err => console.error(err)
