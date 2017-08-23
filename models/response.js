@@ -5,7 +5,7 @@ var mongooseUniqueValidator = require('mongoose-unique-validator');
 var schema = new Schema({
     surveyid: { type: Number, required: true, ref: 'Survey' },
     userkey: { type: String, required: true },
-    answers: { type: Array },
+    answers: { type: Object },
     timestamp: { type: String }
 });
 

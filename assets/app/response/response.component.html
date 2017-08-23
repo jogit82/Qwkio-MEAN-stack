@@ -23,7 +23,7 @@
                     </div>
                     <div *ngIf="q.type==='checkbox'">
                         <div class="checkbox" *ngFor="let option of q.options">
-                        <input name="{{ q.idx }}" id="Q_{{ q.idx }}_R{{ option.id }}" type="checkbox" value="{{ option.id }}" (change)="updateChecked(option.id,$event)" ngModel>
+                        <input name="{{ q.idx }}" id="Q_{{ q.idx }}_R{{ option.id }}" type="checkbox" value="{{ option.id }}" (change)="updateChecked(option.id, q.idx, $event)" ngModel>
                         <label for="Q_{{ q.idx }}_R{{ option.id }}">{{ option.value }}</label>
                         </div>
                     </div>

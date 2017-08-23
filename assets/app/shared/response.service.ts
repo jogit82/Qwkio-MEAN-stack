@@ -8,10 +8,9 @@ import 'rxjs/Rx';
 export class ResponseService {
     constructor(private http: Http) {}
 
-    public saveResponse(formValues) {
-        const body = JSON.stringify(formValues);
+    public saveResponse(answers) {
         const baseUrl = 'http://localhost:3000/response';
-        // const body = JSON.stringify(userResponse);
+        const body = JSON.stringify(answers);
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
 

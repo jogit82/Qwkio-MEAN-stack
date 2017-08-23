@@ -1,3 +1,4 @@
+import { isObject } from 'rxjs/util/isObject';
 import { ArrayType } from '@angular/compiler/src/output/output_ast';
 export class UserResponse {
     constructor(public answers: any,
@@ -9,7 +10,7 @@ export class UserResponse {
 export class Answer {
     constructor(
         public response: {
-            question: string;
+            question: number;
             answers: string;
     }){}
 }
