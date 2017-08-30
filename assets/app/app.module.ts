@@ -10,6 +10,7 @@ import { GuidelinesComponent } from './home/guidelines.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ClipboardModule } from 'ngx-clipboard';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AboutComponent } from './home/about.component';
@@ -38,7 +39,7 @@ import { SurveyPreviewComponent } from './survey/survey-preview.component';
         AppRoutingModule,
         FormsModule,
         HttpModule,
-        ReactiveFormsModule
+        ClipboardModule
     ],
     providers: [
         SurveyService,

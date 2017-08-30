@@ -17,7 +17,7 @@ import { Component } from '@angular/core';
                 <hr>
                 
                 <h1>Survey Advice</h1>
-                    <p>Use number ranges in radio buttons rather than single line text to collect numeric responses. Odds are you’re going to want to group responses into ranges anyway, and it’s easier to process the results if people are selecting “six to ten” rather than writing in “7”, “nine”, “6”, and “eihgt” [sic].</p>
+                    <p>Use number ranges in radio buttons rather than single line text to collect numeric responses. Odds are you’re going to want to group responses into ranges anyway, and it’s easier to process the results if people are selecting “six to ten” rather than writing in “7”, “nine”, “6”, and “eight” [sic].</p>
                     <p>Arrange answers in a consistent manner. Either arrange answers alphabetically or in ascending numerical order, or arrange them by some other logical order like distance or month. But be consistant, as much as possible.</p>
                     <p>Avoid leading questions or leading answers. If you find yourself writing “Don’t you think that…”, you’ve gone astray. Likewise, if your ratings are “Terrible”, “Poor”, “Fair”, “Good”, and “Excellent!!!!!!!”, you may be skewing your results.</p>
             </div>

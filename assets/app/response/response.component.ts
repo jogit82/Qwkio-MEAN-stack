@@ -15,6 +15,7 @@ import 'rxjs/Rx';
 export class ResponseComponent implements OnInit {
     public surveyObject;
     public isClosed;
+    public surveyid;
     public checkboxValues: any[] = [];
     public answers: any[] = [];
 
@@ -29,6 +30,7 @@ export class ResponseComponent implements OnInit {
         .subscribe(
             data => {
                 let response = data.obj;
+                this.surveyid = data.obj.surveyid;
                 this.isClosed = response.closed;
                 this.surveyObject = this.surveyService.convertToJSON(response.rawtext);
             },

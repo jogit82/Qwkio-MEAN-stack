@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Survey = require('../models/survey');
+var Response = require('../models/response');
 const highwayhash = require('highwayhash');
 
 // key is a Buffer containing 32 bytes (256-bit)
@@ -20,6 +21,24 @@ router.get('/api/:ak', function(req, res, next) {
       res.status(201).json({
           message: 'Success',
           obj: doc
+      });
+    }
+  });
+});
+
+router.get('/results/:surveyid', function(req, res, next) {
+  console.log("moo");
+  Response.find({surveyid: req.params.surveyid}, function(err, docs) {
+    if (err) {
+        return res.status(500).json({
+          title: 'An error occured',
+          error: err
+        });
+    }
+    else {
+      res.status(201).json({
+          message: 'Success',
+          obj: docs
       });
     }
   });

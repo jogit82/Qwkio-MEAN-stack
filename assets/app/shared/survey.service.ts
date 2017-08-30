@@ -42,7 +42,6 @@ export class SurveyService {
     }
 
     public close(ak: string){
-        console.log("closing survey");
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
         return this.http.put('http://localhost:3000/admin/close/' + ak, {headers})
@@ -53,7 +52,6 @@ export class SurveyService {
     }
 
     public open(ak){
-        console.log("opening survey");
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
         return this.http.put('http://localhost:3000/admin/open/' + ak, {headers})
@@ -118,6 +116,7 @@ export class SurveyService {
                 curQuestion['options'].push(curOption);
                 curOption['id'] = curQuestion['options'].length;
                 curOption['value'] = line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim();
+                curOption['count'] = 0;
                 // curQuestion['options'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
             }
             else if (is_radio && curQuestion) { // line is radio options
@@ -127,6 +126,7 @@ export class SurveyService {
                 curQuestion['options'].push(curOption);
                 curOption['id'] = curQuestion['options'].length;
                 curOption['value'] = line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim();
+                curOption['count'] = 0;
                 // curQuestion['options'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
             }
             else if (is_dropdown && curQuestion) { // line is dropdown
@@ -136,14 +136,17 @@ export class SurveyService {
                 curQuestion['options'].push(curOption);
                 curOption['id'] = curQuestion['options'].length;
                 curOption['value'] = line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim();
+                curOption['count'] = 0;
                 // curQuestion['options'].push(line.slice(line.indexOf(' ', parseInt(line.indexOf(' ') + 1))).trim());
             }
             else if (is_textbox && curQuestion) { // line is text input box
                 if (curQuestion['type'] === 'singleline') { // already have a singleline, so let's upgrade it to a multiline
                     curQuestion['type'] = 'multiline';
+                    curQuestion['input'] = [];
                 }
                 else if (curQuestion['type'] !== 'multiline') {
                     curQuestion['type'] = 'singleline';
+                    curQuestion['input'] = [];
                 }
             }
             else if (is_pointrating && curQuestion) { // line is point rating
@@ -156,6 +159,7 @@ export class SurveyService {
                     curQuestion['options'].push(curOption);
                     curOption['id'] = i;
                     curOption['value'] = i;
+                    curOption['count'] = 0;
                 }
             }
             else if (curQuestion && !curQuestion['type']) { // no format match but we are in a question, make this a question subtext

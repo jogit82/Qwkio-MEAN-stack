@@ -17,6 +17,8 @@ export class SurveyInputComponent {
 
     onPreview(rawtext: string) {
         this.surveyObject = this.surveyService.convertToJSON(rawtext);
+        console.log("survey Object");
+        console.log(this.surveyObject);
         this.previewClicked.emit(this.surveyObject);
     }
 

@@ -20,4 +20,14 @@ export class ResponseService {
             (error: Response) => Observable.throw(error.json())
         );
     }
+
+    public getResponses(surveyid: number) {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.get('http://localhost:3000/admin/results/' + surveyid, {headers})
+        .map(res => res.json())
+        .catch(
+            (error: Response) => Observable.throw(error.json())
+        );
+    }
 }
