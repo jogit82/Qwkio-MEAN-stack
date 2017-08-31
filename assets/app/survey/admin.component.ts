@@ -62,7 +62,7 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.adminKey = params['id'];
-            console.log(this.adminKey);
+            console.log("admin key: " + this.adminKey);
         });
         this.surveyService.getSurvey(this.adminKey)
         .subscribe(
@@ -107,7 +107,7 @@ export class AdminComponent implements OnInit {
     }
     getResults() {
         // this.resultObj = this.surveyService.convertToJSON(this.returnedSurveyData['rawtext']);
-        console.log("this.returnedSurveyData.surveyid :" + this.returnedSurveyData['surveyid']);
+        console.log("surveyid :" + this.returnedSurveyData['surveyid']);
         this.responseService.getResponses(this.returnedSurveyData['surveyid'])
         .subscribe(
             data => {
@@ -132,34 +132,59 @@ export class AdminComponent implements OnInit {
                         let qNum = this.resultObj['questions'][i].idx;            
                         if(this.resultObj['questions'][i].type === 'checkbox'){ // if Q is checkbox type, we count answer of all responses by looping through answer of that question #
                             for (let j = 0; j < this.returnedResponses['length']; j ++) {
-                                let responses = this.returnedResponses[j]['answers'][qNum - 1];
-                                let individualOption = responses.answer.split(',');  // because checkbox question allows multiple options ["1, 2, 3"], so we split it up and loop through each one
-                                for (let k = 0; k < individualOption.length; k ++) {
-                                    this.resultObj['questions'][i].options[individualOption[k] - 1].count += 1;
-                                }                    
+                                if (this.returnedResponses[j]['answers'][qNum - 1].answer) {
+                                    let responses = this.returnedResponses[j]['answers'][qNum - 1];
+                                    let individualOption = responses.answer.split(',');  // because checkbox question allows multiple options ["1, 2, 3"], so we split it up and loop through each one
+                                    for (let k = 0; k < individualOption.length; k ++) {
+                                        this.resultObj['questions'][i].options[individualOption[k] - 1].count += 1;
+                                    }    
+                                }
+                                else {
+                                    console.log("User key: " + this.returnedResponses[j]['userkey'] + " skipped Question " + qNum);
+                                }              
                             }
                         }
                         else if(this.resultObj['questions'][i].type === 'radio'){ // if radio, we loop through responses and only get answer of that question
                             for (let j = 0; j < this.returnedResponses['length']; j ++) {
-                                let response = this.returnedResponses[j]['answers'][qNum - 1].answer;
-                                this.resultObj['questions'][i].options[response - 1].count += 1;
+                                if (this.returnedResponses[j]['answers'][qNum - 1].answer) {
+                                    let response = this.returnedResponses[j]['answers'][qNum - 1].answer;
+                                    this.resultObj['questions'][i].options[response - 1].count += 1;
+                                }
+                                else {
+                                    console.log("User key: " + this.returnedResponses[j]['userkey'] + " skipped Question " + qNum);
+                                }
                             }
                         }
                         else if(this.resultObj['questions'][i].type === 'pointrating'){ // if pointrating, we loop through responses and only get answer of that question
                             for (let j = 0; j < this.returnedResponses['length']; j ++) {
-                                let response = this.returnedResponses[j]['answers'][qNum - 1].answer;
-                                this.resultObj['questions'][i].options[response - 1].count += 1;
+                                if (this.returnedResponses[j]['answers'][qNum - 1].answer) {
+                                    let response = this.returnedResponses[j]['answers'][qNum - 1].answer;
+                                    this.resultObj['questions'][i].options[response - 1].count += 1;
+                                }
+                                else {
+                                    console.log("User key: " + this.returnedResponses[j]['userkey'] + " skipped Question " + qNum);
+                                }
                             }
                         }
                         else if(this.resultObj['questions'][i].type === 'dropdown'){ // if dropdown, we loop through responses and only get answer of that question
                             for (let j = 0; j < this.returnedResponses['length']; j ++) {
-                                let response = this.returnedResponses[j]['answers'][qNum - 1].answer;
-                                this.resultObj['questions'][i].options[response - 1].count += 1;
+                                if (this.returnedResponses[j]['answers'][qNum - 1].answer) {
+                                    let response = this.returnedResponses[j]['answers'][qNum - 1].answer;
+                                    this.resultObj['questions'][i].options[response - 1].count += 1;
+                                }
+                                else {
+                                    console.log("User key: " + this.returnedResponses[j]['userkey'] + " skipped Question " + qNum);
+                                }
                             }
                         }
                         else if(this.resultObj['questions'][i].type === 'singleline' || this.resultObj['questions'][i].type === 'multiline'){
                             for (let j = 0; j < this.returnedResponses['length']; j ++) {
-                                this.resultObj['questions'][i].input.push(this.returnedResponses[j]['answers'][qNum - 1].answer);
+                                if (this.returnedResponses[j]['answers'][qNum - 1].answer){
+                                    this.resultObj['questions'][i].input.push(this.returnedResponses[j]['answers'][qNum - 1].answer);
+                                }
+                                else {
+                                    console.log("User key: " + this.returnedResponses[j]['userkey'] + " skipped Question " + qNum);
+                                }
                             }
                         }
                     }
