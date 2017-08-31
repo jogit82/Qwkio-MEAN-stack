@@ -1,4 +1,3 @@
-import { forEach } from '@angular/router/src/utils/collection';
 import { ResponseService } from '../shared/response.service';
 import { ActivatedRoute } from '@angular/router';
 import { Survey } from './survey.model';
@@ -51,9 +50,10 @@ export class AdminComponent implements OnInit {
     public publicURL: string;
     public privateURL: string;
     public status: string;
-    public returnedSurveyData: Object;
+    public returnedSurveyData: Object = {};
     public returnedResponses: Object;
-    public result: Object;
+    public JSONresult: any;
+    public resultObj: Object = {};
     isCopied1: boolean = false;
     isCopied2: boolean = false;
     
@@ -62,6 +62,7 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.adminKey = params['id'];
+            console.log(this.adminKey);
         });
         this.surveyService.getSurvey(this.adminKey)
         .subscribe(
@@ -105,58 +106,68 @@ export class AdminComponent implements OnInit {
         }
     }
     getResults() {
+        // this.resultObj = this.surveyService.convertToJSON(this.returnedSurveyData['rawtext']);
+        console.log("this.returnedSurveyData.surveyid :" + this.returnedSurveyData['surveyid']);
         this.responseService.getResponses(this.returnedSurveyData['surveyid'])
         .subscribe(
             data => {
                 this.returnedResponses = data.obj;
-                /* Make a Result Object by combining Response and Survey Object
-                For each survey, we want to start with title and description.
-                Then we want to use survey Object as a base and look for response which has the answer = option.id, count ++
-                */
-                
-                this.result = this.surveyService.convertToJSON(this.returnedSurveyData['rawtext']);
-
-                /* Loop through each question
-                Depending on queston type, we extract answers from returnResponse object differently
-                */
-                for(let i = 0; i < this.result['questions'].length; i ++){
-                    let qNum = this.result['questions'][i].idx;            
-                    if(this.result['questions'][i].type === 'checkbox'){
-                        for (let j = 0; j < this.returnedResponses['length']; j ++) {
-                            let responses = this.returnedResponses[j]['answers'][qNum - 1];
-                            let individualOption = responses.answer.split(',');
-                            for (let k = 0; k < individualOption.length; k ++) {
-                                this.result['questions'][i].options[individualOption[k] - 1].count = this.result['questions'][i].options[individualOption[k] - 1].count + 1;
-                            }                    
+                if (this.returnedResponses['length'] === 0) {
+                    console.log("No responses yet.");
+                }
+                else {
+                    this.resultObj = this.surveyService.convertToJSON(this.returnedSurveyData['rawtext']);
+                    // console.log(this.resultObj);
+                    /* Make a this.resultObj Object by combining Response and Survey Object
+                    For each survey, we want to start with title and description.
+                    Then we want to use survey Object as a base and look for response which has the answer = option.id, count ++
+                    */
+                    
+                    // this.resultObj = this.surveyService.convertToJSON(this.returnedSurveyData['rawtext']);
+    
+                    /* Loop through each question
+                    Depending on queston type, we extract answers from returnedResponse object differently
+                    */
+                    for(let i = 0; i < this.resultObj['questions'].length; i ++){
+                        let qNum = this.resultObj['questions'][i].idx;            
+                        if(this.resultObj['questions'][i].type === 'checkbox'){ // if Q is checkbox type, we count answer of all responses by looping through answer of that question #
+                            for (let j = 0; j < this.returnedResponses['length']; j ++) {
+                                let responses = this.returnedResponses[j]['answers'][qNum - 1];
+                                let individualOption = responses.answer.split(',');  // because checkbox question allows multiple options ["1, 2, 3"], so we split it up and loop through each one
+                                for (let k = 0; k < individualOption.length; k ++) {
+                                    this.resultObj['questions'][i].options[individualOption[k] - 1].count += 1;
+                                }                    
+                            }
                         }
-                    }
-                    if(this.result['questions'][i].type === 'radio'){
-                        for (let j = 0; j < this.returnedResponses['length']; j ++) {
-                            let responses = this.returnedResponses[j]['answers'][qNum - 1];
-                            this.result['questions'][i].options[responses.answer - 1].count = this.result['questions'][i].options[responses.answer - 1].count + 1;
+                        else if(this.resultObj['questions'][i].type === 'radio'){ // if radio, we loop through responses and only get answer of that question
+                            for (let j = 0; j < this.returnedResponses['length']; j ++) {
+                                let response = this.returnedResponses[j]['answers'][qNum - 1].answer;
+                                this.resultObj['questions'][i].options[response - 1].count += 1;
+                            }
                         }
-                    }
-                    if(this.result['questions'][i].type === 'pointrating'){
-                        for (let j = 0; j < this.returnedResponses['length']; j ++) {
-                            let responses = this.returnedResponses[j]['answers'][qNum - 1];
-                            this.result['questions'][i].options[responses.answer - 1].count = this.result['questions'][i].options[responses.answer - 1].count + 1;
+                        else if(this.resultObj['questions'][i].type === 'pointrating'){ // if pointrating, we loop through responses and only get answer of that question
+                            for (let j = 0; j < this.returnedResponses['length']; j ++) {
+                                let response = this.returnedResponses[j]['answers'][qNum - 1].answer;
+                                this.resultObj['questions'][i].options[response - 1].count += 1;
+                            }
                         }
-                    }
-                    if(this.result['questions'][i].type === 'dropdown'){
-                        for (let j = 0; j < this.returnedResponses['length']; j ++) {
-                            let responses = this.returnedResponses[j]['answers'][qNum - 1];
-                            this.result['questions'][i].options[responses.answer - 1].count = this.result['questions'][i].options[responses.answer - 1].count + 1;
+                        else if(this.resultObj['questions'][i].type === 'dropdown'){ // if dropdown, we loop through responses and only get answer of that question
+                            for (let j = 0; j < this.returnedResponses['length']; j ++) {
+                                let response = this.returnedResponses[j]['answers'][qNum - 1].answer;
+                                this.resultObj['questions'][i].options[response - 1].count += 1;
+                            }
                         }
-                    }
-                    if(this.result['questions'][i].type === 'singleline' || this.result['questions'][i].type === 'multiline'){
-                        for (let j = 0; j < this.returnedResponses['length']; j ++) {
-                            this.result['questions'][i].input.push(this.returnedResponses[j]['answers'][qNum - 1].answer);
+                        else if(this.resultObj['questions'][i].type === 'singleline' || this.resultObj['questions'][i].type === 'multiline'){
+                            for (let j = 0; j < this.returnedResponses['length']; j ++) {
+                                this.resultObj['questions'][i].input.push(this.returnedResponses[j]['answers'][qNum - 1].answer);
+                            }
                         }
                     }
                 }
-               console.log(this.result);
+                // this.JSONresult = JSON.stringify(this.resultObj);
+                console.log(this.resultObj);
             },
             err => console.error(err)
         );
-    }
+    } // end of getResult()
 }
