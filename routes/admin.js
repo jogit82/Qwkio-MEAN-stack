@@ -27,7 +27,6 @@ router.get('/api/:ak', function(req, res, next) {
 });
 
 router.get('/results/:surveyid', function(req, res, next) {
-  console.log("moo");
   Response.find({surveyid: req.params.surveyid}, function(err, docs) {
     if (err) {
         return res.status(500).json({
