@@ -7,7 +7,7 @@
         <input type="text" class="form-control" [(ngModel)]="publicURL">
         <span class="input-group-btn">
           <button class="btn btn-default" [class.btn-warning]="isCopied1" type="button" ngxClipboard [cbContent]="publicURL" (cbOnSuccess)="isCopied1 = true">Copy</button>
-          <a href="http://localhost:3000/{{ publicKey }}" class="btn btn-default" target="_blank">Go to survey</a>
+          <a href="{{ publicKey }}" class="btn btn-default" target="_blank">Go to survey</a>
         </span>
     </div>
     <br>

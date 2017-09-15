@@ -9,7 +9,7 @@ export class SurveyService {
     constructor(private http: Http) {}
 
     public saveSurvey(survey: Survey) {
-        const baseUrl = 'http://localhost:3000/admin';
+        const baseUrl = 'admin';
         const body = JSON.stringify(survey);
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -24,7 +24,7 @@ export class SurveyService {
     public getSurvey(adminkey: string) {
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:3000/admin/api/' + adminkey, {headers})
+        return this.http.get('admin/api/' + adminkey, {headers})
         .map(res => res.json())
         .catch(
             (error: Response) => Observable.throw(error.json())
@@ -34,7 +34,7 @@ export class SurveyService {
     public getPublicSurvey(pk: string) {
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:3000/pk/' + pk, {headers})
+        return this.http.get('pk/' + pk, {headers})
         .map(res => res.json())
         .catch(
             (error: Response) => Observable.throw(error.json())
@@ -44,7 +44,7 @@ export class SurveyService {
     public close(ak: string){
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.put('http://localhost:3000/admin/close/' + ak, {headers})
+        return this.http.put('admin/close/' + ak, {headers})
         .map(res => res.json())
         .catch(
             (error: Response) => Observable.throw(error.json())
@@ -54,7 +54,7 @@ export class SurveyService {
     public open(ak){
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.put('http://localhost:3000/admin/open/' + ak, {headers})
+        return this.http.put('admin/open/' + ak, {headers})
         .map(res => res.json())
         .catch(
             (error: Response) => Observable.throw(error.json())

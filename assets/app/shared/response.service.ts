@@ -11,7 +11,7 @@ import 'rxjs/Rx';
 export class ResponseService {
     constructor(private http: Http) {}
     public saveResponse(data) {
-        const baseUrl = 'http://localhost:3000/response';
+        const baseUrl = 'response';
         const body = JSON.stringify(data);
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -26,7 +26,7 @@ export class ResponseService {
     public getResponses(surveyid: number) {
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:3000/admin/results/' + surveyid, {headers})
+        return this.http.get('admin/results/' + surveyid, {headers})
         .map(res => res.json())
         .catch(
             (error: Response) => Observable.throw(error.json())

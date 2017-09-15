@@ -52,8 +52,8 @@ export class AdminComponent implements OnInit {
                 }
                 this.returnedSurveyData = data.obj;
                 this.publicKey = (this.returnedSurveyData['surveyid']).toString(36);
-                this.publicURL = 'http://localhost:3000/' + this.publicKey;
-                this.privateURL = 'http://localhost:3000/admin/' + this.adminKey;
+                this.publicURL = 'qwk.io/' + this.publicKey;
+                this.privateURL = 'qwk.io/admin/' + this.adminKey;
                 this.getResults();
             },
             err => console.error(err)
@@ -100,6 +100,7 @@ export class AdminComponent implements OnInit {
         .subscribe(
             data => {
                 this.returnedResponses = data.obj;
+                // console.log(this.returnedResponses);
                 let totalResponses = this.returnedResponses['length'];
                 if (totalResponses === 0) {
                     console.log("No responses yet.");
