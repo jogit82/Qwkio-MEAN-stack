@@ -12,7 +12,8 @@ var adminRoutes = require('./routes/admin');
 var responseRoutes = require('./routes/response');
 
 var app = express();
-mongoose.connect('mongodb://localhost/qwkio_mean', {
+// mongoose.connect('mongodb://localhost/qwkio_mean', {
+  mongoose.connect('mongodb://qwkioadmin:ilovemandy123@ds135444.mlab.com:35444/qwkio', {
   useMongoClient: true
 }) // create a mongodb database on the fly
 

@@ -1,3 +1,5 @@
+import { ResultService } from './shared/result.service';
+import { ReportComponent } from './survey/report.component';
 import { ThankyouComponent } from './home/thankyou.component';
 import { ResponseService } from './shared/response.service';
 import { SurveyService } from './shared/survey.service';
@@ -26,6 +28,7 @@ import { SurveyPreviewComponent } from './survey/survey-preview.component';
         SurveyComponent,
         SurveyInputComponent,
         SurveyPreviewComponent,
+        ReportComponent,
         AdminComponent,
         ResponseComponent,
         AboutComponent,
@@ -43,7 +46,8 @@ import { SurveyPreviewComponent } from './survey/survey-preview.component';
     ],
     providers: [
         SurveyService,
-        ResponseService
+        ResponseService,
+        ResultService
     ],
     bootstrap: [AppComponent]
 })

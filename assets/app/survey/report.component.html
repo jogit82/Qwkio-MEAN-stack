@@ -1,0 +1,58 @@
+<div class="container" style="margin-top: 20px;">
+    <div class="panel panel-default">
+      <!-- <div class="panel-heading">{{ result.title }}</div> -->
+      <table class="table" #myResultTable>
+        <thead>
+          <tr><td>{{ result.title }}</td></tr>
+          <tr><td>{{ result.description }}</td></tr>
+        </thead>
+        <tbody >
+        <tbody *ngFor="let question of result.questions">
+          <thead *ngIf="question.type == 'checkbox'">
+            <tr><td>{{ question.title }}</td></tr>
+            <tr><td>Answer Choices</td><td>Percents</td><td>Responses</td></tr>
+            <tr *ngFor="let option of question.options"><td>{{ option.value }}</td><td>23</td><td>{{ option.count }}</td></tr>
+            <tr><td></td><td>Answered</td><td>40</td></tr>
+            <tr><td></td><td>Skipped</td><td>2</td></tr>
+          </thead>
+          <thead *ngIf="question.type == 'radio'">
+              <tr><td>{{ question.title }}</td></tr>
+              <tr><td>Answer Choices</td><td>Percents</td><td>Responses</td></tr>
+              <tr *ngFor="let option of question.options"><td>{{ option.value }}</td><td>23</td><td>{{ option.count }}</td></tr>
+              <tr><td></td><td>Answered</td><td>40</td></tr>
+              <tr><td></td><td>Skipped</td><td>2</td></tr>
+          </thead>
+          <thead *ngIf="question.type == 'pointrating'">
+              <tr><td>{{ question.title }}</td></tr>
+              <tr><td>Answer Choices</td><td>Percents</td><td>Responses</td></tr>
+              <tr *ngFor="let option of question.options"><td>{{ option.value }}</td><td>23</td><td>{{ option.count }}</td></tr>
+              <tr><td></td><td>Answered</td><td>40</td></tr>
+              <tr><td></td><td>Skipped</td><td>2</td></tr>
+          </thead>
+          <thead *ngIf="question.type == 'dropdown'">
+              <tr><td>{{ question.title }}</td></tr>
+              <tr><td>Answer Choices</td><td>Percents</td><td>Responses</td></tr>
+              <tr *ngFor="let option of question.options"><td>{{ option.value }}</td><td>23</td><td>{{ option.count }}</td></tr>
+              <tr><td></td><td>Answered</td><td>40</td></tr>
+              <tr><td></td><td>Skipped</td><td>2</td></tr>
+          </thead>
+          <thead *ngIf="question.type == 'singleline'">
+              <tr><td>{{ question.title }}</td></tr>
+              <tr *ngFor="let input of question.input"><td>{{ input }}</td></tr>
+              <tr><td></td><td>Answered</td><td>40</td></tr>
+              <tr><td></td><td>Skipped</td><td>2</td></tr>
+          </thead>
+          <thead *ngIf="question.type == 'multiline'">
+              <tr><td>{{ question.title }}</td></tr>
+              <tr *ngFor="let input of question.input"><td>{{ input }}</td></tr>
+              <tr><td></td><td>Answered</td><td>40</td></tr>
+              <tr><td></td><td>Skipped</td><td>2</td></tr>
+        </thead>
+        </tbody>
+      </table>
+  
+    </div>
+    <button (click)="exportToExcel()" class="btn btn-primary">Export to XLS (Excel)</button>
+    <!-- <button (click)="exportToCSV()" class="btn btn-primary">Export to CSV</button> -->
+  </div>
+  

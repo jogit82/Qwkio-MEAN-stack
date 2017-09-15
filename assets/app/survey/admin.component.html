@@ -1,0 +1,78 @@
+<div class="col-md-8">
+    <h4><strong>Information About Your Survey</strong></h4>
+    <h4><small>Survey is {{status}}.</small></h4>
+    <h5><strong>Public Link</strong></h5>
+    <p>Share this link with anyone you want to answer your survey.  Be sure to check over your survey first to make sure everything looks okay. If anything's wrong, just hit the back button and create another one.</p>
+    <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="publicURL">
+        <span class="input-group-btn">
+          <button class="btn btn-default" [class.btn-warning]="isCopied1" type="button" ngxClipboard [cbContent]="publicURL" (cbOnSuccess)="isCopied1 = true">Copy</button>
+          <a href="http://localhost:3000/{{ publicKey }}" class="btn btn-default" target="_blank">Go to survey</a>
+        </span>
+    </div>
+    <br>
+    <h5><strong>Private Link</strong></h5>
+    <p>Keep this link private!  It will allow you to download your survey results, see how many people have responded, or close the survey.<u>DO NOT</u> lose this link!  Since Qwk.io is completely anonymous, there is no way to get it back if you lose it.</p>
+    <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="privateURL">
+        <span class="input-group-btn">
+            <button class="btn btn-default" [class.btn-warning]= "isCopied2" type="button" ngxClipboard [cbContent]="privateURL" (cbOnSuccess)="isCopied2 = true">Copy</button>
+            <button class="btn btn-default" type="button" [class.btn-success]="value === 'Open survey'" [class.btn-danger]="value === 'Close survey'" (click)="changeStatus()">{{value}}</button>
+        </span>
+    </div>
+    <br>
+    <div>
+        <p><small>
+        Note: When you close your survey, anyone who visits your survey's public URL will get an error message saying the survey has been
+        closed.  You will still be able to access the survey results even after you close a survey.  Don't worry if you close a
+        survey by mistake, you can always re-open it again.
+        </small></p>
+    </div>
+    <div *ngIf="showResult" style="margin-top: 20px;">
+        <div class="panel panel-default">
+          <div class="panel-heading">Results [total of {{ result['totalResponses'] }} responses]</div>
+          <table class="table" #myResultTable>
+            <thead>
+              <tr><td colspan="3">{{ result['title'] }}</td></tr>
+              <tr><td colspan="3">{{ result['description'] }}</td></tr>
+            </thead>
+            <tbody >
+            <tbody *ngFor="let question of result['questions']">
+              <thead *ngIf="question.type == 'checkbox'">
+                <tr><td  class="text-left question">{{ question.idx }}) {{ question.title }}</td><td colspan="2" class="info">Multiple Choice</td></tr>
+                <tr class="small"><td class="text-left"></td><td>[%]</td><td>Responses</td></tr>
+                <tr *ngFor="let option of question.options"><td class="text-left">{{ option.value }}</td><td>{{ option.percent }}</td><td>{{ option.count }}</td></tr>
+                <tr><td></td><td>Skipped</td><td class="warning">{{ question.skipped }}</td></tr>
+              </thead>
+              <thead *ngIf="question.type == 'radio'">
+                  <tr><td class="text-left question">{{ question.idx }}) {{ question.title }}</td><td colspan="2" class="info">Single Choice</td></tr>
+                  <tr class="small"><td class="text-left"></td><td>[%]</td><td>Responses</td></tr>
+                  <tr *ngFor="let option of question.options"><td class="text-left">{{ option.value }}</td><td>{{ option.percent }}</td><td>{{ option.count }}</td></tr>
+                  <tr><td></td><td>Skipped</td><td class="warning">{{ question.skipped }}</td></tr>
+              </thead>
+              <thead *ngIf="question.type == 'pointrating'">
+                  <tr><td class="text-left question">{{ question.idx }}) {{ question.title }}</td><td colspan="2" class="info">Point Rating</td></tr>
+                  <tr class="small"><td class="text-left"></td><td>[%]</td><td>Responses</td></tr>
+                  <tr *ngFor="let option of question.options"><td class="text-left">{{ option.value }}</td><td>{{ option.percent }}</td><td>{{ option.count }}</td></tr>
+                  <tr><td></td><td>Skipped</td><td class="warning">{{ question.skipped }}</td></tr>
+              </thead>
+              <thead *ngIf="question.type == 'dropdown'">
+                  <tr><td class="text-left question">{{ question.idx }}) {{ question.title }}</td><td colspan="2" class="info">Dropdown(Single Choice)</td></tr>
+                  <tr class="small"><td class="text-left"></td><td>[%]</td><td>Responses</td></tr>
+                  <tr *ngFor="let option of question.options"><td class="text-left">{{ option.value }}</td><td>{{ option.percent }}</td><td>{{ option.count }}</td></tr>
+                  <tr><td></td><td>Skipped</td><td class="warning">{{ question.skipped }}</td></tr>
+              </thead>
+              <thead *ngIf="question.type == 'singleline' || question.type == 'multiline'">
+                  <tr><td class="text-left question">{{ question.idx }}) {{ question.title }}</td><td colspan="2" class="info">Text Input</td></tr>
+                  <tr class="small"><td class="text-left" colspan="3">Inputs By Users</td></tr>
+                  <tr *ngFor="let input of question.input"><td class="text-left" colspan="3">{{ input }}</td></tr>
+                  <tr><td class="text-right">Skipped</td><td class="warning" colspan="2">{{ question.skipped }}</td></tr>
+              </thead>
+            </tbody>
+          </table>
+      
+        </div>
+        <button (click)="exportToExcel()" class="btn btn-primary">Export to XLS (Excel)</button>
+      </div>
+      
+</div>
