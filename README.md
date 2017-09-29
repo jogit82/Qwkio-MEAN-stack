@@ -1,6 +1,6 @@
-# Qwkio
+# Qwk.io
 Creating a survey by using the world's easiest markup!  
-This will eventually be Qwk.io using Node,Angular 4, Express and MongoDB. Right now this app is in another repo and is using Ruby on Rails/MongoDB. Working on converting it.
+Live! Go check it out! Qwk.io
 
 Steps:
 ------
