@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var autoIncrement = require('mongoose-auto-increment');
 var mongooseUniqueValidator = require('mongoose-unique-validator');
-
-var connection = mongoose.connect('mongodb://qwkioadmin:ilovemandy123@ds135444.mlab.com:35444/qwkio', {
+// var env = require('node-env-file');
+var connection = mongoose.connect('mongodb://qwkioadmin:'+process.env.mongodb+'@ds135444.mlab.com:35444/qwkio', {
   useMongoClient: true
 });
 autoIncrement.initialize(connection);

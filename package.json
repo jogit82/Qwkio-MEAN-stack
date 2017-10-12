@@ -33,6 +33,7 @@
     "mongoose-unique-validator": "^1.0.5",
     "morgan": "~1.8.1",
     "ngx-clipboard": "^8.0.4",
+    "node-env-file": "^0.1.8",
     "rxjs": "^5.4.0",
     "serve-favicon": "~2.4.2",
     "xlsx": "^0.11.3",
